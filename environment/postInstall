@@ -1,0 +1,169 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Claude Code Installation for Allen Institute Hackathon Template
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# NOTE: The Claude Code skill recommends installing Node.js/Claude Code at runtime
+# in /code/run instead of postInstall. This approach pre-installs for convenience
+# in a hackathon template context, but for production reproducibility, follow
+# the runtime installation pattern from the skill.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+echo "=== Installing runtime prerequisites for Claude Code ==="
+
+# Ensure required system packages are present
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -y
+apt-get install -y --no-install-recommends \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg \
+  util-linux \
+  bsdextrautils
+
+echo "=== Installing Node.js 20.x from NodeSource ==="
+
+# Install Node.js 20.x (LTS) from official NodeSource repository
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt-get install -y nodejs
+
+# Verify Node.js and npm installation
+if ! command -v node >/dev/null 2>&1; then
+  echo "ERROR: node command not found after installation" >&2
+  exit 1
+fi
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "ERROR: npm command not found after Node.js installation" >&2
+  exit 1
+fi
+
+echo "Node.js version: $(node --version)"
+echo "npm version: $(npm --version)"
+
+echo "=== Installing Claude Code CLI globally ==="
+
+# Install Claude Code CLI to /usr/local (accessible to all users)
+export NPM_GLOBAL_PREFIX="/usr/local"
+npm install -g --prefix "${NPM_GLOBAL_PREFIX}" @anthropic-ai/claude-code
+
+# Verify Claude Code installation
+if ! command -v claude >/dev/null 2>&1; then
+  echo "ERROR: claude command not found after installation" >&2
+  echo "Check that /usr/local/bin is in PATH" >&2
+  exit 1
+fi
+
+echo "Claude Code installed successfully!"
+claude --version
+
+echo "=== Creating appuser for Claude Code execution ==="
+
+# Claude Code requires non-root execution with --dangerously-skip-permissions
+# Create appuser if it doesn't exist
+if ! id appuser &>/dev/null; then
+  useradd -m -u 1000 -s /bin/bash appuser
+  echo "appuser created (UID 1000)"
+else
+  echo "appuser already exists"
+fi
+
+# Ensure appuser home directory exists and is owned correctly
+HOME_DIR="$(eval echo ~appuser)"
+mkdir -p "${HOME_DIR}"
+chown -R appuser:appuser "${HOME_DIR}"
+
+# Test that appuser can execute claude
+if runuser -u appuser -- sh -lc 'claude --version >/dev/null 2>&1'; then
+  echo "✓ appuser can execute claude successfully"
+else
+  echo "WARNING: appuser cannot execute claude. May need PATH adjustment." >&2
+fi
+
+echo "=== Claude Code installation complete ==="
+
+echo ""
+echo "=== Installing rtk-ai ==="
+
+# Install rtk-ai CLI tool
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+
+# Add /root/.local/bin to PATH for subsequent commands
+export PATH="/root/.local/bin:${PATH}"
+
+# Verify rtk installation
+if ! command -v rtk >/dev/null 2>&1; then
+  echo "ERROR: rtk command not found after installation" >&2
+  echo "Checking installation location..." >&2
+  if [ -f "/root/.local/bin/rtk" ]; then
+    echo "Found rtk at /root/.local/bin/rtk, creating symlink to /usr/local/bin" >&2
+    ln -s /root/.local/bin/rtk /usr/local/bin/rtk
+  else
+    echo "rtk binary not found at expected location" >&2
+    exit 1
+  fi
+fi
+
+# Initialize rtk globally
+if command -v rtk >/dev/null 2>&1; then
+  rtk init --global
+  echo "rtk-ai installed and initialized successfully!"
+  rtk --version
+else
+  echo "ERROR: rtk command still not accessible" >&2
+  exit 1
+fi
+
+echo ""
+echo "=== Installing Vercel agent-browser ==="
+
+# Install agent-browser globally via npm
+npm install -g --prefix "${NPM_GLOBAL_PREFIX}" agent-browser
+
+# Verify agent-browser installation
+if ! command -v agent-browser >/dev/null 2>&1; then
+  echo "ERROR: agent-browser command not found after installation" >&2
+  exit 1
+fi
+
+echo "agent-browser installed successfully!"
+agent-browser --version || echo "agent-browser version check completed"
+
+# Download Chrome for Testing (first time setup)
+echo "Downloading Chrome for Testing..."
+agent-browser install || echo "Chrome installation attempted"
+
+# Set up PATH for appuser to access all tools
+echo "export PATH=\"/usr/local/bin:/root/.local/bin:\$PATH\"" >> /etc/environment
+
+# Verify appuser can execute all tools
+echo ""
+echo "Verifying appuser access to tools..."
+if runuser -u appuser -- sh -lc 'export PATH="/usr/local/bin:/root/.local/bin:$PATH" && claude --version >/dev/null 2>&1'; then
+  echo "✓ appuser can execute claude"
+else
+  echo "WARNING: appuser cannot execute claude. May need PATH adjustment." >&2
+fi
+
+if runuser -u appuser -- sh -lc 'export PATH="/usr/local/bin:/root/.local/bin:$PATH" && agent-browser --version >/dev/null 2>&1'; then
+  echo "✓ appuser can execute agent-browser"
+else
+  echo "WARNING: appuser cannot execute agent-browser. May need PATH adjustment." >&2
+fi
+
+if runuser -u appuser -- sh -lc 'export PATH="/usr/local/bin:/root/.local/bin:$PATH" && rtk --version >/dev/null 2>&1'; then
+  echo "✓ appuser can execute rtk"
+else
+  echo "WARNING: appuser cannot execute rtk. May need PATH adjustment." >&2
+fi
+
+echo ""
+echo "=== All AI agent tools installation complete ==="
+echo ""
+echo "Ready for hackathon development!"
+echo "Installed tools:"
+echo "  • Claude Code - AI coding assistant"
+echo "  • rtk-ai - AI toolkit and framework"
+echo "  • agent-browser - Browser automation agent"
