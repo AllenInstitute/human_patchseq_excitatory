@@ -1,6 +1,6 @@
-# hash:sha256:80024edfc135baa33e17ce66d9ddd996bc955f0d55ec1cbe39dee52b6f478eda
+# hash:sha256:0aaecf1fa35060072437824d1ac016c730cf74d254f6fe109d1180faea211086
 ARG REGISTRY_HOST
-FROM $REGISTRY_HOST/codeocean/mambaforge3:24.5.0-0-python3.12.4-ubuntu22.04
+FROM $REGISTRY_HOST/codeocean/mambaforge3:23.1.0-4-python3.10.12-ubuntu22.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG GIT_ASKPASS
@@ -8,6 +8,21 @@ COPY git-ask-pass /
 
 ENV CLAUDE_CODE_USE_BEDROCK=1
 ENV AWS_REGION=us-west-1
+
+RUN pip install -U --no-cache-dir \
+    allensdk==2.16.2 \
+    anndata==0.11.4 \
+    matplotlib==3.10.9 \
+    morph-utils==1.5.9 \
+    neuron-morphology==1.2.2 \
+    numpy==1.23.5 \
+    pandas==1.5.3 \
+    plotly==6.8.0 \
+    scikit-posthocs==0.14.0 \
+    scipy==1.10.1 \
+    seaborn==0.13.2 \
+    statsmodels==0.14.6 \
+    svgpathtools==1.7.2
 
 ADD "https://github.com/coder/code-server/releases/download/v4.100.3/code-server-4.100.3-linux-amd64.tar.gz" /.code-server/code-server.tar.gz
 
