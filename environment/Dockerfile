@@ -1,4 +1,4 @@
-# hash:sha256:0aaecf1fa35060072437824d1ac016c730cf74d254f6fe109d1180faea211086
+# hash:sha256:bdcbfbec3659f3f35b0cd55c1de2109e6cb94803f3d7ea5fae60c7713272a929
 ARG REGISTRY_HOST
 FROM $REGISTRY_HOST/codeocean/mambaforge3:23.1.0-4-python3.10.12-ubuntu22.04
 
@@ -13,9 +13,11 @@ RUN pip install -U --no-cache-dir \
     allensdk==2.16.2 \
     anndata==0.11.4 \
     matplotlib==3.10.9 \
+    matplotlib-scalebar==0.9.0 \
     morph-utils==1.5.9 \
     neuron-morphology==1.2.2 \
     numpy==1.23.5 \
+    openpyxl==3.1.5 \
     pandas==1.5.3 \
     plotly==6.8.0 \
     scikit-posthocs==0.14.0 \
