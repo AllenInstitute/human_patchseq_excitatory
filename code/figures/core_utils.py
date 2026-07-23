@@ -25,7 +25,7 @@ import matplotlib.colors as mc
 import colorsys
 
 
-def get_tx_order_dict(subclass_order_file, ttype_order_file):
+def get_tx_order_dict(subclass_order_file, ttype_order_file, ttype_to_subclass_file):
     """
     Load transcriptomic type order dictionary organized by subclass.
 
@@ -45,7 +45,7 @@ def get_tx_order_dict(subclass_order_file, ttype_order_file):
     -----
     Requires ttype_subclass_dict.json mapping file to link types to subclasses.
     """
-    with open(r'\\allen\programs\celltypes\workgroups\mousecelltypes\SarahWB\datasets\human_exc\data\formatting_dicts\ttype_subclass_dict.json', 'r') as file:
+    with open(ttype_to_subclass_file, 'r') as file:
         ttype_to_subclass_dict = json.load(file)
 
     with open(subclass_order_file, 'r') as file:
@@ -58,7 +58,7 @@ def get_tx_order_dict(subclass_order_file, ttype_order_file):
         tx_order = [t for t in ttype_order if ttype_to_subclass_dict[t] == subclass]
         tx_order_dict[subclass] = tx_order
 
-    return tx_order_dict
+    return tx_order_dict, ttype_order, subclass_order
 
 
 def natural_sort_key(s, _nsre=re.compile('([0-9]+)')):

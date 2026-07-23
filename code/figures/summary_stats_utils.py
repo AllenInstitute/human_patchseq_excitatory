@@ -15,6 +15,7 @@ Dependencies:
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 def plot_donor_lobe_counts(ax, df, color_dict):
     """
@@ -156,3 +157,48 @@ def abundance_barplot(df, type_order, ax, color_dict, x_col= 'supertype_frac_of_
 
     sns.despine()
     plt.tight_layout()
+
+
+def plot_abundance(df, ax, color_dict, frac_col = 'supertype_frac_of_layer', label_supertypes=True, radius=1, center=(0,0), title='', label_threshold=0.01, title_bottom=False):
+
+    # if label: labels = df['supertype'][color_dict[st] for st in layer_df['supertype']]
+    # else: labels = None
+
+    wedges, texts = ax.pie(df[frac_col], 
+                        labels=None, 
+                        colors=[color_dict[st] for st in df['supertype']], 
+                        startangle=180, #90, 
+                        counterclock=False, 
+                        rotatelabels=True,
+                        textprops={'fontsize': 4},
+                        radius = radius,
+                        center = center)
+    
+    if label_supertypes:
+        labels = df['supertype']
+        for w, label in zip(wedges, labels):
+            angle_span = w.theta2 - w.theta1
+            if angle_span / 360 > label_threshold:  # only show label if wedge > label_threshold
+                theta = (w.theta2 + w.theta1) / 2
+                x = center[0] + 1.05 * radius * np.cos(np.deg2rad(theta))
+                y = center[1] + 1.05 * radius * np.sin(np.deg2rad(theta))
+                
+                rotation = theta
+                if 90 < theta < 270:
+                    rotation = (theta + 180) % 360
+                    ha = 'right'
+                else:
+                    ha = 'left'
+
+                if rotation > 180:
+                    rotation -= 360
+
+                ax.text(x, y, label, ha=ha, va='center', fontsize=4, rotation=rotation, 
+                        rotation_mode='anchor', color=color_dict[label])
+
+
+    ax.set_aspect('equal')
+    if title_bottom:
+        ax.text(0.5, -0.03, title, transform=ax.transAxes, ha='center', va='top', fontsize=6)
+    else: 
+        ax.set_title(title, size=6, pad=2)

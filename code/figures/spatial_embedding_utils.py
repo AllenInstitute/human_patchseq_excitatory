@@ -519,3 +519,129 @@ def plot_spatial_density_kde(df, ax, y_label, hue_label, hue_order, color_dict,
                 ha='left',
                 zorder=10,
             )
+
+
+def get_spatial_density_kde(df, y_label, hue_label, hue_order, color_dict):
+
+    fig, ax = plt.subplots()
+    
+    # Initial plot (no fill) to get the peaks from
+    ax = sns.kdeplot(
+        data=df,
+        y=y_label,
+        hue=hue_label, 
+        hue_order=hue_order,
+        palette=color_dict,
+        fill=False,
+        common_norm=True,
+        alpha=0.2,
+        linewidth=2,
+        legend=False
+    )
+
+    # Map each drawn line back to its hue (line order from sns.kdeplot does not match hue_order)
+    peaks = {}
+    used_hues = set()
+
+    # Precompute RGBA for your palette entries
+    palette_rgba = {h: mcolors.to_rgba(color_dict[h]) for h in hue_order if h in color_dict}
+
+    for line in ax.lines:
+        x, y = line.get_data()
+        if len(x) == 0:
+            continue
+
+        # scale by group’s global proportion
+        line.set_data(x, y)
+
+        peak_idx = np.argmax(x)
+        peak_x = float(x[peak_idx])
+        peak_y = float(y[peak_idx])
+
+        # Try to get hue from line label if seaborn embedded it
+        label = line.get_label()
+        mapped_hue = None
+        if isinstance(label, str) and label in hue_order:
+            mapped_hue = label
+
+        # If label didn't help, match by color (RGBA)
+        if mapped_hue is None:
+            line_rgba = mcolors.to_rgba(line.get_color())
+            # find unmatched hue with closest color
+            candidates = [h for h in palette_rgba.keys() if h not in used_hues]
+            if not candidates:
+                continue
+            # prefer exact-ish match
+            for h in candidates:
+                if np.allclose(line_rgba, palette_rgba[h], atol=1e-2):
+                    mapped_hue = h
+                    break
+            # fallback: pick nearest by Euclidean distance in RGBA space
+            if mapped_hue is None:
+                mapped_hue = min(candidates, key=lambda h: np.linalg.norm(np.array(line_rgba) - np.array(palette_rgba[h])))
+
+        peaks[mapped_hue] = {'peak_x': peak_x, 'peak_y': peak_y, 
+                             'line_x' : x,     'line_y' : y}
+        used_hues.add(mapped_hue)
+
+    # Convert to DataFrame
+    peak_df = pd.DataFrame.from_dict(peaks, orient='index').reset_index().rename(columns={'index': hue_label}).set_index(hue_label)
+
+    # delete plot
+    plt.close(fig)  
+    
+    return peak_df
+
+
+def plot_precomputed_kde(ax, df, ttype_order, color_dict, label_x=True, label_y=True, label_peaks=True):
+
+    for t in ttype_order:
+        if t in df.index:
+            ax.plot(df.loc[t].line_x, 
+                    df.loc[t].line_y, 
+                    c=color_dict[t])
+
+    ax.set_ylim(0, 3500) #standard isodepth range 
+    ax.set_xticks([])   
+    if label_x:
+        ax.set_xlabel("Density", fontsize=6)
+    else:
+        ax.set_xlabel("")
+
+    if label_y:
+        ax.set_yticks([0, 2800])  
+        ax.set_yticklabels(['pia', '~wm']) 
+    else:
+        ax.set_yticks([])  
+        ax.set_yticklabels([]) 
+    ax.set_ylabel("")
+
+    sns.despine(ax=ax)
+    plt.gca().invert_yaxis()  # optional: deeper depths lower on plot
+    ax.tick_params(axis='both', colors='grey', labelsize=6)  # Set ticks color to greycolors='grey', 
+    for spine in ax.spines.values(): spine.set_color('grey')
+
+    if label_peaks:
+        # Overlay text on the peaks
+        for label in ttype_order:
+            if label in df.index:
+                peak_x = df.loc[label]['peak_x']
+                peak_y = df.loc[label]['peak_y']
+
+                # offset a bit to the right and up for visibility
+                text_x = peak_x + 0.00001   # move 5% right of the peak
+                text_y = peak_y          # same depth value
+
+                ax.text(
+                    text_x,
+                    text_y,
+                    label,  # the label text
+                    color=color_dict[label],
+                    fontsize=5,
+                    fontweight='bold',
+                    rotation=15,
+                    rotation_mode='anchor',
+                    va='center',
+                    ha='left',
+                    zorder=10,
+                )
