@@ -194,7 +194,7 @@ def process_fi_curves(ephys_feat_df):
         Ephys features with columns:
         - specimen_id (index)
         - stimulus_amplitude_*: stimulus currents
-        - nwg_avg_rate_*: firing rates
+        - avg_rate_*: firing rates
 
     Returns
     -------
@@ -214,12 +214,12 @@ def process_fi_curves(ephys_feat_df):
     Fills in zero firing rates for bins below threshold.
     """
     amp_cols = ephys_feat_df.columns[ephys_feat_df.columns.str.startswith("stimulus_amplitude_")]
-    rate_cols = ephys_feat_df.columns[ephys_feat_df.columns.str.startswith("nwg_avg_rate_")]
+    rate_cols = ephys_feat_df.columns[ephys_feat_df.columns.str.startswith("avg_rate_")]
     sub_df = ephys_feat_df[rate_cols.union(amp_cols)].reset_index()
     sub_df.columns = sub_df.columns.str.replace("_long_square", "")
     sub_df_long = pd.wide_to_long(
         sub_df,
-        stubnames=["nwg_avg_rate", "stimulus_amplitude"],
+        stubnames=["avg_rate", "stimulus_amplitude"],
         i="specimen_id", j="step",
         sep="_").dropna().reset_index().set_index("specimen_id"
     )
@@ -245,7 +245,7 @@ def process_fi_curves(ephys_feat_df):
     # Set type to Interval for concat column type matching
     sub_df_long['amp_bin'] = sub_df_long['amp_bin'].cat.categories.take(sub_df_long['amp_bin'].cat.codes).values
     sub_df_long['amp_bin'] = sub_df_long['amp_bin'].astype('interval[int64, right]')
-    sub_df_long = sub_df_long.rename(columns={'nwg_avg_rate': 'avg_rate'})
+    sub_df_long = sub_df_long.rename(columns={'avg_rate': 'avg_rate'})
 
     sub_df_long_filled = pd.concat([sub_df_long, new_df])
     return sub_df_long_filled, bins
