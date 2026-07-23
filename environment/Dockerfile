@@ -1,4 +1,4 @@
-# hash:sha256:bdcbfbec3659f3f35b0cd55c1de2109e6cb94803f3d7ea5fae60c7713272a929
+# hash:sha256:194ccbf653d5b7e96ab920f5e58cd4a31880afb698e75cc062f63080802adec3
 ARG REGISTRY_HOST
 FROM $REGISTRY_HOST/codeocean/mambaforge3:23.1.0-4-python3.10.12-ubuntu22.04
 
@@ -12,6 +12,7 @@ ENV AWS_REGION=us-west-1
 RUN pip install -U --no-cache-dir \
     allensdk==2.16.2 \
     anndata==0.11.4 \
+    cairosvg==2.9.0 \
     matplotlib==3.10.9 \
     matplotlib-scalebar==0.9.0 \
     morph-utils==1.5.9 \
