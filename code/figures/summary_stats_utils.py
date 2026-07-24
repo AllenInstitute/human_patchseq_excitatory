@@ -164,16 +164,16 @@ def plot_abundance(df, ax, color_dict, frac_col = 'supertype_frac_of_layer', lab
     # if label: labels = df['supertype'][color_dict[st] for st in layer_df['supertype']]
     # else: labels = None
 
-    wedges, texts = ax.pie(df[frac_col], 
-                        labels=None, 
-                        colors=[color_dict[st] for st in df['supertype']], 
-                        startangle=180, #90, 
-                        counterclock=False, 
+    wedges, texts = ax.pie(df[frac_col],
+                        labels=None,
+                        colors=[color_dict[st] for st in df['supertype']],
+                        startangle=180, #90,
+                        counterclock=False,
                         rotatelabels=True,
                         textprops={'fontsize': 4},
                         radius = radius,
                         center = center)
-    
+
     if label_supertypes:
         labels = df['supertype']
         for w, label in zip(wedges, labels):
@@ -182,7 +182,7 @@ def plot_abundance(df, ax, color_dict, frac_col = 'supertype_frac_of_layer', lab
                 theta = (w.theta2 + w.theta1) / 2
                 x = center[0] + 1.05 * radius * np.cos(np.deg2rad(theta))
                 y = center[1] + 1.05 * radius * np.sin(np.deg2rad(theta))
-                
+
                 rotation = theta
                 if 90 < theta < 270:
                     rotation = (theta + 180) % 360
@@ -193,12 +193,220 @@ def plot_abundance(df, ax, color_dict, frac_col = 'supertype_frac_of_layer', lab
                 if rotation > 180:
                     rotation -= 360
 
-                ax.text(x, y, label, ha=ha, va='center', fontsize=4, rotation=rotation, 
+                ax.text(x, y, label, ha=ha, va='center', fontsize=4, rotation=rotation,
                         rotation_mode='anchor', color=color_dict[label])
 
 
     ax.set_aspect('equal')
     if title_bottom:
         ax.text(0.5, -0.03, title, transform=ax.transAxes, ha='center', va='top', fontsize=6)
-    else: 
+    else:
         ax.set_title(title, size=6, pad=2)
+
+
+def plot_confusion_matrix(ax, cm, labels, color_dict, title="",
+                          num_cell_xbuffer=0.4, n_height=0.015,
+                          fontsize_diagonal=15, fontsize_counts=15, fontsize_labels=12,
+                          fontsize_title=12,
+                          fontsize_ticks=10, cmap="rocket", cbar=True):
+    """
+    Plot row-normalized confusion matrix on existing axis.
+
+    This function creates a standardized confusion matrix visualization
+    matching the style used in the classifier notebooks. It handles
+    safe normalization (avoiding divide-by-zero), diagonal annotation
+    with accuracy percentages, cell count annotations, and color-coded
+    tick labels.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+        Axis to plot on (must be provided, not created)
+    cm : np.ndarray
+        Raw confusion matrix (n_labels × n_labels)
+        Rows represent true labels, columns represent predicted labels
+    labels : list
+        Ordered label names (for tick labels)
+    color_dict : dict
+        Mapping {label: hex_color} for coloring tick labels
+    title : str, optional
+        Title text for plot (default="")
+    num_cell_xbuffer : float, optional
+        Horizontal offset for count annotations relative to matrix width
+        (default=0.4)
+    n_height : float, optional
+        Vertical offset for 'n' header annotation (default=0.015)
+    fontsize_diagonal : int, optional
+        Font size for diagonal accuracy percentages (default=15)
+    fontsize_counts : int, optional
+        Font size for count annotations on right side (default=15)
+    fontsize_ticks : int, optional
+        Font size for axis tick labels (default=10)
+    cmap : str, optional
+        Seaborn colormap name (default='rocket')
+
+    Returns
+    -------
+    dict
+        Dictionary containing:
+        - 'normalized_cm': row-normalized confusion matrix (np.ndarray)
+        - 'row_acc': per-class accuracy from diagonal (np.ndarray)
+
+    Notes
+    -----
+    Styling details matching original classifier notebooks:
+    - Heatmap: rocket colormap, vmin=0, vmax=1, square cells
+    - Normalization: by row (true class), using safe divide to handle
+      labels with zero test samples
+    - Diagonal annotations: white text if accuracy <50%, black if ≥50%
+    - Format: {val*100:.0f} (no decimal places)
+    - Count annotations: right side of matrix, grey color, italic 'n' header
+    - Tick labels: colored by color_dict
+    - Axis labels: 'Predicted' (x), 'Actual' (y), fontsize=12
+    - Y-axis ticks: hidden (left=False, right=False)
+    - Colorbar: enabled with pad=0.08
+
+    The safe normalization uses np.divide with where clause:
+    - Returns 0.0 for labels with no test samples (avoids NaN/Inf)
+    - Normalized values represent per-class recall (row-wise accuracy)
+
+    Examples
+    --------
+    >>> fig, ax = plt.subplots(figsize=(6, 6))
+    >>> cm_raw = confusion_matrix(y_test, y_pred, labels=label_list)
+    >>> result = plot_confusion_matrix(
+    ...     ax=ax,
+    ...     cm=cm_raw,
+    ...     labels=label_list,
+    ...     color_dict=seaad_colors,
+    ...     title='Morphology Classifier'
+    ... )
+    >>> plt.tight_layout()
+    >>> plt.savefig('confusion_matrix.pdf')
+    """
+    import seaborn as sns
+
+    # Safe row normalization (avoid divide-by-zero)
+    true_counts = np.sum(cm, axis=1)
+    normalized_cm = np.divide(
+        cm,
+        true_counts[:, np.newaxis],
+        out=np.zeros_like(cm, dtype=float),
+        where=true_counts[:, np.newaxis] != 0
+    )
+
+    # Extract diagonal (per-class accuracy)
+    row_acc = np.diag(normalized_cm)
+
+    # Plot heatmap
+    sns.heatmap(
+        normalized_cm,
+        annot=False,
+        fmt=".2f",
+        cmap=cmap,
+        vmin=0,
+        vmax=1,
+        xticklabels=labels,
+        yticklabels=labels,
+        square=True,
+        cbar=cbar,
+        cbar_kws={"pad": 0.8},
+        ax=ax
+    )
+
+    # Annotate diagonal with accuracy percentages
+    for i in range(len(labels)):
+        val = row_acc[i]
+        # Only annotate if we have samples for this label
+        if true_counts[i] > 0:
+            ax.text(
+                i + 0.5,
+                i + 0.5,
+                f"{val*100:.0f}",
+                ha="center",
+                va="center",
+                fontsize=fontsize_diagonal,
+                color="white" if val < 0.5 else "black"
+            )
+
+    # Axis labels
+    ax.set_xlabel('Predicted', fontsize=fontsize_labels)
+    ax.set_ylabel('Actual', fontsize=fontsize_labels)
+
+    # Set title if provided
+    if title:
+        ax.set_title(title, fontsize=fontsize_title)
+
+    # Tick label formatting
+    ax.tick_params(axis='x', labelsize=fontsize_ticks, rotation=90)
+    ax.tick_params(axis='y', labelsize=fontsize_ticks, rotation=0)
+
+    # Annotate cell counts on right side
+    for i in range(len(labels)):
+        ax.text(
+            len(labels) + num_cell_xbuffer,
+            i + 0.5,
+            int(true_counts[i]),
+            ha="center",
+            va="center",
+            fontsize=fontsize_counts,
+            color='grey'
+        )
+
+    # Add 'n' header for counts column
+    ax.text(
+        len(labels) + num_cell_xbuffer,
+        n_height,
+        'n',
+        ha="center",
+        va="center",
+        fontsize=fontsize_counts,
+        color='grey',
+        fontstyle='italic'
+    )
+
+    # Remove y-axis ticks (keep labels)
+    ax.tick_params(axis='y', which='both', left=False, right=False)
+
+    # Color tick labels by cell type
+    for label in ax.get_xticklabels():
+        text = label.get_text()
+        if text in color_dict:
+            label.set_color(color_dict[text])
+
+    for label in ax.get_yticklabels():
+        text = label.get_text()
+        if text in color_dict:
+            label.set_color(color_dict[text])
+
+    return {
+        'normalized_cm': normalized_cm,
+        'row_acc': row_acc
+    }
+
+
+def plot_cbar(ax):
+
+    ax.axis("off")
+
+    ax_cbar = ax.inset_axes([
+        -0.7,  # left
+        0.05,  # bottom
+        0.10,  # width
+        0.90,  # height
+    ])
+
+    cmap = sns.color_palette("rocket", as_cmap=True)
+    norm = mpl.colors.Normalize(vmin=0, vmax=1)
+
+    sm = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    sm.set_array([])
+
+    cbar = plt.colorbar(sm, cax=ax_cbar)
+    cbar.set_ticks([0, 1])
+    cbar.set_ticklabels(["0", "100"])
+    cbar.ax.tick_params(labelsize=5)  
+    cbar.outline.set_visible(False)
+
+    for spine in ax_cbar.spines.values():
+        spine.set_visible(False)
