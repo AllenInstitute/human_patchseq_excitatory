@@ -238,10 +238,18 @@ def format_box_plot(ax):
 
         # Each box has associated Line2D objects (to make the whiskers, fliers, etc.)
         # Loop over them here, and use the same color as above
-        for line in ax.lines[i * lines_per_boxplot: (i + 1) * lines_per_boxplot]:
-            line.set_color(col)
-            line.set_mfc(col)  # facecolor of fliers
-            line.set_mec(col)  # edgecolor of fliers
+        # For the last box, take all remaining lines to handle cases where lines don't divide evenly
+        if i == num_patches - 1:
+            start_idx = i * lines_per_boxplot
+            for line in ax.lines[start_idx:]:
+                line.set_color(col)
+                line.set_mfc(col)  # facecolor of fliers
+                line.set_mec(col)  # edgecolor of fliers
+        else:
+            for line in ax.lines[i * lines_per_boxplot: (i + 1) * lines_per_boxplot]:
+                line.set_color(col)
+                line.set_mfc(col)  # facecolor of fliers
+                line.set_mec(col)  # edgecolor of fliers
 
 
 def find_ttype_key(keys, substring):
