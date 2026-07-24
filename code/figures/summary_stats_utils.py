@@ -16,6 +16,8 @@ Dependencies:
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import matplotlib as mpl
+
 
 def plot_donor_lobe_counts(ax, df, color_dict):
     """
