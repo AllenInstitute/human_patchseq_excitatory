@@ -197,10 +197,10 @@ def get_tx_order():
     Loads ordering from text files containing one label per line.
     Different from get_tx_order_dict which returns a dictionary structure.
     """
-    with open(Path('/allen/programs/celltypes/workgroups/mousecelltypes/SarahWB/datasets/human_exc/data/formatting_dicts/subclass_order.txt'), 'r') as f:
+    with open(Path('/root/capsule/data/formatting_dicts/subclass_order.txt'), 'r') as f:
         subclass_order = f.read().splitlines()
 
-    with open(Path('/allen/programs/celltypes/workgroups/mousecelltypes/SarahWB/datasets/human_exc/data/formatting_dicts/ttype_order.txt'), 'r') as f:
+    with open(Path('/root/capsule/data/formatting_dicts/ttype_order.txt'), 'r') as f:
         ttype_order = f.read().splitlines()
 
     return ttype_order, subclass_order
