@@ -138,7 +138,7 @@ def plot_morph_lineup_swb(ax, merge_df, type_column, types, aligned_swc_dir, lay
 
     xoffset = 0
     for type in types:
-        spec_ids = merge_df[merge_df[type_column] == type].sort_values("soma aligned distance from pia").specimen_id
+        spec_ids = merge_df[merge_df[type_column] == type].sort_values("Soma aligned distance from pia").specimen_id
 
         color = color_dict[type]
 
@@ -238,7 +238,7 @@ def plot_dendrite_depth_profiles_swb(ax, merge_df, type_column, types, hist_df, 
     xoffset = 0
     xoffsets = {}
     for type in types:
-        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("soma aligned distance from pia").index
+        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("Soma aligned distance from pia").index
 
         color = color_dict[type]
         sub_depth_df = hist_df.loc[
@@ -290,7 +290,7 @@ def plot_axon_depth_profiles_swb(ax, merge_df, type_column, types, hist_df, axon
 
     xoffset = 0
     for type in types:
-        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("soma aligned distance from pia").index
+        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("Soma aligned distance from pia").index
 
         color = hex_to_gray(SEAAD_COLORS[type])
         sub_depth_df = hist_df.loc[
@@ -324,7 +324,7 @@ def plot_dendrite_depth_profiles_subclass(ax, merge_df, type_column, types, hist
     xoffset = 0
     xoffsets = {}
     for type in types:
-        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("soma aligned distance from pia").index
+        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("Soma aligned distance from pia").index
 
         color = SEAAD_COLORS[type]
         sub_depth_df = hist_df.loc[
@@ -363,7 +363,7 @@ def plot_axon_depth_profiles_subclass(ax, merge_df, type_column, types, hist_df,
     xoffset = 0 
     for type in types:
         # xoffset = xoffsets[type]
-        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("soma aligned distance from pia").index
+        spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("Soma aligned distance from pia").index
 
         color = SEAAD_COLORS[type]
         sub_depth_df = hist_df.loc[

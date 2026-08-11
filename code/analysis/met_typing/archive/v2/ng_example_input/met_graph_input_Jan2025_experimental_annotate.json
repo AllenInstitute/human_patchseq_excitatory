@@ -1,0 +1,23 @@
+{
+
+
+
+	#INPUT FILES same as before (?)
+	"tx_anno_file": "/allen/programs/celltypes/workgroups/rnaseqanalysis/shiny/patch_seq/star/archived/mouse_patchseq_VISp_20210818_collapsed40_cpm/anno.feather",
+	"cluster_labels_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/me_clust_output/exc_met_mouse_me_clustering_Jan2025/refined_text_labels.csv",
+	"subsample_assignments_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/derived_data/subsample_me_assignments_Jan2025.csv",
+	"tx_mapping_file": "/allen/programs/celltypes/workgroups/rnaseqanalysis/shiny/patch_seq/star/archived/mouse_patchseq_VISp_20210818_collapsed40_cpm/mapping.memb.with.bp.40.csv",
+	 
+	#INPUT FILES new to this MET version (?)
+	"dendrogram_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/data/dend_children.json",
+	# --> following made with `review revised me types.ipynb`
+	"ephys_corr_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/derived_data/met_corr_ephys_Jan2025.csv",
+	"morph_corr_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/derived_data/met_corr_morph_Jan2025.csv",
+	"genes_corr_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/derived_data/met_corr_genes_Jan2025.csv"
+
+	#OUTPUT FILES 
+	"met_node_partition_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/derived_data/exc_met_node_partitions_Jan2025.json",
+	"met_assignment_file": "/allen/programs/celltypes/workgroups/ivscc/nathang/exc_mouse_met/derived_data/exc_met_cell_assignment_runs_Jan2025.csv",
+	
+}
+

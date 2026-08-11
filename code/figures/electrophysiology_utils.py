@@ -497,8 +497,14 @@ def plot_ap_ttype(subclass_dict, ttypes, ttype_to_subclass_dict, color_dict, ax,
         for cellname in cell_data.keys():
             v_arr = cell_data[cellname]['voltage']
             dv_arr = cell_data[cellname]['dVdt']
-            ttp_varrs.append(v_arr)
-            ttp_dvdts.append(dv_arr)
+            if len(v_arr) > 0 and len(dv_arr) > 0:
+                ttp_varrs.append(v_arr)
+                ttp_dvdts.append(dv_arr)
+
+        # Skip ttypes with no usable traces
+        if not ttp_varrs:
+            print(f"Skipping {ttype}: no valid AP traces")
+            continue
 
         ttype_color = color_dict[ttype]
         if '/' in ttype:
