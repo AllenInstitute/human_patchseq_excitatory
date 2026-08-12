@@ -412,3 +412,123 @@ def plot_cbar(ax):
 
     for spine in ax_cbar.spines.values():
         spine.set_visible(False)
+
+
+def plot_abundance_stacked_bar(
+    df,
+    ax,
+    color_dict,
+    frac_col='supertype_frac_of_layer',
+    title='',
+    label_supertypes=True,
+    height=0.2,
+    vertical=False):
+    """
+    Plot supertype abundance as a stacked bar chart.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame with 'supertype' column and fraction column.
+        Must be sorted by 'supertype' categorical to ensure correct order.
+    ax : matplotlib.axes.Axes
+        Axis to plot on.
+    color_dict : dict
+        Mapping of supertype names to colors.
+    frac_col : str
+        Column containing proportions (0-1 range).
+    title : str
+        Title for the plot.
+    label_supertypes : bool
+        Whether to show labels for each segment.
+    height : float
+        Thickness of the stacked bar.
+    vertical : bool
+        If False, plot left-to-right.
+        If True, plot bottom-to-top.
+    """
+
+    categories = df['supertype'].values
+    proportions = df[frac_col].values
+    colors = [color_dict[cat] for cat in categories]
+
+    position = 0
+
+    for cat, prop, color in zip(categories, proportions, colors):
+
+        if vertical:
+            # Bottom-to-top stacked bar
+            ax.bar(
+                0,
+                prop,
+                bottom=position,
+                width=height,
+                color=color,
+                edgecolor='white',
+                linewidth=1
+            )
+
+            if label_supertypes:
+                text_x = -0.2
+                text_y = position + prop / 2
+
+                ax.text(
+                    text_x,
+                    text_y,
+                    f"{cat}\n{prop:.2f}",
+                    ha='center',
+                    va='center',
+                    fontsize=5,
+                    color=color,
+                    weight='bold'
+                )
+
+        else:
+            # Left-to-right stacked bar
+            ax.barh(
+                0,
+                prop,
+                left=position,
+                height=height,
+                color=color,
+                edgecolor='white',
+                linewidth=1
+            )
+
+            if label_supertypes:
+                text_x = position + prop / 2
+                text_y = -0.2
+
+                ax.text(
+                    text_x,
+                    text_y,
+                    f"{cat}\n{prop:.2f}",
+                    ha='center',
+                    va='center',
+                    fontsize=5,
+                    color=color,
+                    weight='bold'
+                )
+
+        position += prop
+
+    # Axis limits
+    if vertical:
+        ax.set_ylim(0, 1)
+        ax.set_xlim(-0.5, 0.5)
+    else:
+        ax.set_xlim(0, 1)
+        ax.set_ylim(-0.5, 0.5)
+
+    # Clean styling
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+    if title:
+        ax.set_title(title, size=6, pad=2)
+
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+    ax.set_xlabel('')
+    ax.set_ylabel('')
