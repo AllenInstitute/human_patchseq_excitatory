@@ -465,7 +465,7 @@ def plot_abundance_stacked_bar(
                 width=height,
                 color=color,
                 edgecolor='white',
-                linewidth=1
+                linewidth=0
             )
 
             if label_supertypes:
@@ -475,7 +475,7 @@ def plot_abundance_stacked_bar(
                 ax.text(
                     text_x,
                     text_y,
-                    f"{cat}\n{prop:.2f}",
+                    f"{cat}\n{prop:.3f}",
                     ha='center',
                     va='center',
                     fontsize=5,
@@ -492,7 +492,7 @@ def plot_abundance_stacked_bar(
                 height=height,
                 color=color,
                 edgecolor='white',
-                linewidth=1
+                linewidth=0
             )
 
             if label_supertypes:
@@ -502,7 +502,7 @@ def plot_abundance_stacked_bar(
                 ax.text(
                     text_x,
                     text_y,
-                    f"{cat}\n{prop:.2f}",
+                    f"{cat}\n{prop:.3f}",
                     ha='center',
                     va='center',
                     fontsize=5,

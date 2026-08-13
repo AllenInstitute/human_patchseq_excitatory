@@ -90,9 +90,9 @@ def add_swc_paths(data, directory, column_name='swc_file_path', drop_missing=Tru
     return data
 
 
-def plot_morph_lineup_swb(ax, merge_df, type_column, types, aligned_swc_dir, layer_edges, layer_labels, color_dict,
-                          plot_quantiles=None, path_color="#cccccc", morph_spacing=300, plot_scalebar=True,
-                          plot_layer_labels=True, compartment_type='dendrite'):
+def plot_morph_lineup(ax, merge_df, type_column, types, aligned_swc_dir, layer_edges, layer_labels, color_dict,
+                          plot_quantiles=None, path_color="#cccccc", morph_spacing=None, plot_scalebar=True,
+                          plot_layer_labels=True, compartment_type='dendrite', buffer=50):
     """
     Plot aligned morphologies in a horizontal lineup.
 
@@ -146,10 +146,16 @@ def plot_morph_lineup_swb(ax, merge_df, type_column, types, aligned_swc_dir, lay
         for spec_id in spec_ids:
             swc_path = os.path.join(aligned_swc_dir, f"{spec_id}.swc")
             morph = swc.read_swc(swc_path)
+            nrn = morphology_from_swc(swc_path)
             if compartment_type == 'dendrite':
+                compartments = [3, 4]
                 morph_colors = {3: adjust_lightness(color, 0.5), 4: color}
             else:  # axon
+                compartments = [2]
                 morph_colors = {2: hex_to_gray(color)}
+
+            if morph_spacing is None:
+                xoffset += leftextent(nrn, compartments)
 
             basic_morph_plot(morph, ax=ax, xoffset=xoffset, morph_colors=morph_colors)
             morph_locs.append(xoffset)
@@ -158,7 +164,10 @@ def plot_morph_lineup_swb(ax, merge_df, type_column, types, aligned_swc_dir, lay
             if merge_df[merge_df.specimen_id == spec_id]['lobe'].values[0] != 'TemL':
                 ax.plot([xoffset], [-list(layer_edges)[-1]-100], marker='o', color='grey', markersize=1, zorder=5)
 
-            xoffset += morph_spacing
+            if morph_spacing is None:
+                xoffset += rightextent(nrn, compartments) + buffer
+            else:
+                xoffset += morph_spacing
 
         title_str = type
         if title_str.count(" ") > 1:
@@ -168,7 +177,8 @@ def plot_morph_lineup_swb(ax, merge_df, type_column, types, aligned_swc_dir, lay
 
     sns.despine(ax=ax, bottom=True)
     ax.set_xticks([])
-    ax.set_xlim(-morph_spacing / 1.25, xoffset - morph_spacing / 2)
+    if not morph_spacing is None:
+        ax.set_xlim(-morph_spacing / 1.25, xoffset - morph_spacing / 2)
     ax.set_aspect("equal")
 
     for e in layer_edges:
@@ -478,8 +488,58 @@ def plot_prop_for_mets_swb(ax, types, merge_df, type_column, prop_name, prop_lab
     ax.spines['right'].set_color('grey')
 
 
+def _compute_subclass_counts(subclass, soma_depths_df, metadata_morph_dend,
+                            metadata_morph_axon=None, metadata_ephys=None):
+    """
+    Compute transcriptomic, ephys, and morphology counts for a subclass.
+
+    Parameters
+    ----------
+    subclass : str
+        Subclass label
+    soma_depths_df : pandas.DataFrame
+        Contains all specimens with soma depths and subclass_label column
+    metadata_morph_dend : pandas.DataFrame
+        Full dendrite morphology metadata with subclass_label column
+    metadata_morph_axon : pandas.DataFrame, optional
+        Full axon morphology metadata with subclass_label column
+    metadata_ephys : pandas.DataFrame, optional
+        Ephys metadata with subclass_label column
+
+    Returns
+    -------
+    tuple
+        (transcriptomic_count, ephys_count, dendrite_morph_count, axon_morph_count)
+    """
+    # T: All specimens in soma_depths_df for this subclass
+    t_count = (soma_depths_df['subclass_label'] == subclass).sum()
+
+    # E: Ephys specimens (if metadata provided)
+    if metadata_ephys is not None and 'subclass_label' in metadata_ephys.columns:
+        e_count = (metadata_ephys['subclass_label'] == subclass).sum()
+    else:
+        e_count = 0
+
+    # Md: All specimens with dendrite morphology for this subclass
+    if metadata_morph_dend is not None and 'subclass_label' in metadata_morph_dend.columns:
+        md_count = (metadata_morph_dend['subclass_label'] == subclass).sum()
+    else:
+        md_count = 0
+
+    # Ma: All specimens with axon morphology for this subclass
+    if metadata_morph_axon is not None and 'subclass_label' in metadata_morph_axon.columns:
+        ma_count = (metadata_morph_axon['subclass_label'] == subclass).sum()
+    else:
+        ma_count = 0
+
+    return t_count, e_count, md_count, ma_count
+
+
 def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, layer_labels, color_dict, ttype_order,
-                       cluster_col='t_type', buffer=100, plot_scalebar=True, plot_somadepth=False):
+                       cluster_col='t_type', buffer=100, plot_scalebar=True, plot_somadepth=False,
+                       plot_subclass_labels=False, ttype_to_subclass_dict=None,
+                       metadata_ephys=None, metadata_morph_dend=None, metadata_morph_axon=None,
+                       subclass_order=None):
     """
     Plot morphology gallery with optional soma depth scatter.
 
@@ -509,6 +569,18 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
         If True, add scale bar
     plot_somadepth : bool, optional
         If True, add soma depth scatter at end
+    plot_subclass_labels : bool, optional
+        If True, add subclass labels and counts above type labels (default=False)
+    ttype_to_subclass_dict : dict, optional
+        Mapping from t_type to subclass_label. Required if plot_subclass_labels=True
+    metadata_ephys : pandas.DataFrame, optional
+        Ephys metadata with 'subclass_label' column for E counts. If None, E counts omitted
+    metadata_morph_dend : pandas.DataFrame, optional
+        Full dendrite morphology metadata with 'subclass_label' column for Md counts. If None, Md counts omitted
+    metadata_morph_axon : pandas.DataFrame, optional
+        Full axon morphology metadata with 'subclass_label' column for Ma counts. If None, Ma counts omitted
+    subclass_order : list, optional
+        Ordered list of subclasses. If None, inferred from gallery_cells order
 
     Returns
     -------
@@ -521,6 +593,40 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
 
     xoffset_dict = {}
     title_count = 0
+
+    # Subclass tracking for labels
+    subclass_info = {}  # {subclass: {'left_x': val, 'right_x': val, 'specimen_ids': [...]}}
+    gallery_cells_with_subclass = None
+
+    if plot_subclass_labels:
+        if ttype_to_subclass_dict is None:
+            raise ValueError("ttype_to_subclass_dict required when plot_subclass_labels=True")
+
+        # Add subclass info to gallery_cells
+        gallery_cells_with_subclass = gallery_cells.copy()
+        gallery_cells_with_subclass['t_type'] = [
+            data.loc[sid, 't_type'] for sid in gallery_cells_with_subclass['specimen_id']
+        ]
+        gallery_cells_with_subclass['subclass_label'] = [
+            ttype_to_subclass_dict[tt] for tt in gallery_cells_with_subclass['t_type']
+        ]
+
+        # Determine subclass order (maintains plotting order)
+        if subclass_order is None:
+            subclass_order = []
+            for sid in gallery_cells['specimen_id'].values[::-1]:  # Reverse to match plot order
+                ttype = data.loc[sid, 't_type']
+                subclass = ttype_to_subclass_dict[ttype]
+                if subclass not in subclass_order:
+                    subclass_order.append(subclass)
+
+        # Initialize tracking for each subclass
+        for subclass in subclass_order:
+            subclass_info[subclass] = {
+                'left_x': None,
+                'right_x': None,
+                'specimen_ids': []
+            }
 
     with warnings.catch_warnings():
         warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -545,6 +651,12 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
             sp = sps_list.pop()
 
             ttype = data.loc[sp, 't_type']
+
+            # Track subclass membership
+            if plot_subclass_labels:
+                subclass = ttype_to_subclass_dict[ttype]
+                subclass_info[subclass]['specimen_ids'].append(sp)
+
             title_count += 1
             try:
                 hex_color = color_dict[ttype][1:]
@@ -567,6 +679,11 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
             morph = swc.read_swc(swc_path)
             xoffset += leftextent(nrn, compartment_list)
 
+            # Track left boundary
+            if plot_subclass_labels:
+                if subclass_info[subclass]['left_x'] is None:
+                    subclass_info[subclass]['left_x'] = xoffset
+
             ax.text(xoffset, group_title_start_height,
                    "{}".format(ttype.replace('Car3', '\nCar3')),
                    ha='center', fontsize=group_title_font_size, color=hex_color, rotation=30)
@@ -575,11 +692,72 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
             xoffset_dict[ttype] = xoffset
 
             xoffset += rightextent(nrn, compartment_list)
+
+            # Track right boundary
+            if plot_subclass_labels:
+                subclass_info[subclass]['right_x'] = xoffset
+
             xoffset += buffer
 
-            if plot_scalebar:
-                scalebar = ScaleBar(1, "um", location='center left', frameon=False, fixed_value=250, color='grey', font_properties={'size': 6})
-                ax.add_artist(scalebar)
+        # Plot subclass labels and counts
+        if plot_subclass_labels:
+            subclass_label_y = 1600  # Above type labels (at y=100)
+            count_label_y = 900     # Between subclass and type labels
+            subclass_font_size = 7  # Larger than type labels
+            count_font_size = 5     # Same as type labels
+
+            for subclass in subclass_order:
+                if subclass not in subclass_info:
+                    continue
+
+                info = subclass_info[subclass]
+                if info['left_x'] is None or info['right_x'] is None:
+                    continue  # No cells plotted for this subclass
+
+                # Calculate center position
+                center_x = (info['left_x'] + info['right_x']) / 2
+
+                # Get subclass color
+                subclass_color = color_dict.get(subclass)
+                if subclass_color is None:
+                    # Fallback: use first specimen's type color
+                    if info['specimen_ids']:
+                        first_ttype = data.loc[info['specimen_ids'][0], 't_type']
+                        subclass_color = color_dict.get(first_ttype, 'grey')
+                    else:
+                        subclass_color = 'grey'
+
+                # Plot subclass label
+                ax.text(center_x, subclass_label_y,
+                       subclass,
+                       ha='center', va='bottom',
+                       fontsize=subclass_font_size,
+                       color=subclass_color,
+                       rotation=0,
+                       weight='bold')
+
+                # Compute and format counts
+                t_count, e_count, md_count, ma_count = _compute_subclass_counts(
+                    subclass, soma_depths_df, metadata_morph_dend, metadata_morph_axon, metadata_ephys
+                )
+
+                # Format as two lines without brackets
+                if metadata_ephys is not None:
+                    count_str = f'T={t_count} | E={e_count}\nMd={md_count} | Ma={ma_count}'
+                else:
+                    count_str = f'T={t_count}\nMd={md_count} | Ma={ma_count}'
+
+                # Plot count label
+                ax.text(center_x, count_label_y,
+                       count_str,
+                       ha='center', va='bottom',
+                       fontsize=count_font_size,
+                       color=subclass_color,
+                       rotation=0)
+
+        if plot_scalebar:
+            scalebar = ScaleBar(1, "um", location='center left', frameon=False, fixed_value=250, color='grey', font_properties={'size': 6})
+            ax.add_artist(scalebar)
 
         xoffset += buffer * 5
 
@@ -876,11 +1054,11 @@ def plot_subclass_hairballs(ax, morpho_sorted_clean_data, subclass_order, layer_
 
         # Save label
         if plot_subclass:  # Title subclass and number of cells
-            ax.text(xoffset, 50,
+            ax.text(xoffset, 100,
                    "{}\n(n={}) ".format(subclass, this_num_cells),
                    horizontalalignment='center', fontsize=5, color=color_dict[subclass])
         else:  # Just title number of cells
-            ax.text(xoffset, 50,
+            ax.text(xoffset, 100,
                    "(n={}) ".format(this_num_cells),
                    horizontalalignment='center', fontsize=5, color=color_dict[subclass])
 

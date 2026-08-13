@@ -3,7 +3,8 @@
     "allow": [
       "Bash(python3:*)",
       "Bash(find /root/capsule/data -name *rename* -o -name *formatting* -o -name *dict*)",
-      "Bash(grep -r \"specimen_id\\\\|specimen_name\" /root/capsule/code/figures/*.py)"
+      "Bash(grep -r \"specimen_id\\\\|specimen_name\" /root/capsule/code/figures/*.py)",
+      "Bash(jupyter nbconvert:*)"
     ]
   }
 }
