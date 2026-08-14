@@ -4,7 +4,11 @@
       "Bash(python3:*)",
       "Bash(find /root/capsule/data -name *rename* -o -name *formatting* -o -name *dict*)",
       "Bash(grep -r \"specimen_id\\\\|specimen_name\" /root/capsule/code/figures/*.py)",
-      "Bash(jupyter nbconvert:*)"
+      "Bash(jupyter nbconvert:*)",
+      "Bash(tee /tmp/notebook_execution.log)",
+      "Bash(tee /tmp/notebook_execution2.log)",
+      "Bash(tee /tmp/notebook_execution3.log)",
+      "Bash(ls -lh /root/capsule/code/analysis/dprime/*.ipynb)"
     ]
   }
 }

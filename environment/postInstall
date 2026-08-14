@@ -163,6 +163,23 @@ else
 fi
 
 echo ""
+echo "=== Installing drcme ==="
+
+DRCME_DIR="/opt/drcme"
+
+# Clone the full repository so bin scripts are available
+git clone https://github.com/AllenInstitute/drcme.git "${DRCME_DIR}"
+
+# Install the Python package while retaining the repository contents
+python -m pip install -e "${DRCME_DIR}"
+
+# Verify
+python -c "import drcme; print('drcme:', drcme.__file__)"
+
+echo "drcme repository installed at ${DRCME_DIR}"
+
+
+echo ""
 echo "=== All AI agent tools installation complete ==="
 echo ""
 echo "Ready for hackathon development!"

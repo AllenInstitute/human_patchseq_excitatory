@@ -1,4 +1,4 @@
-# hash:sha256:1a2c47031449358e2f36a37344463dffd0e2ab4d45abc57aa59abc400433bed9
+# hash:sha256:2794c238ed0f612ffa3db899438cf14dcdf1da8f44dc1fb8669c75166c53faa8
 ARG REGISTRY_HOST
 FROM $REGISTRY_HOST/codeocean/mambaforge3:23.1.0-4-python3.10.12-ubuntu22.04
 
@@ -23,6 +23,8 @@ RUN pip install -U --no-cache-dir \
     openpyxl==3.1.5 \
     pandas==1.5.3 \
     plotly==6.8.0 \
+    pyarrow==25.0.1 \
+    pypdf2==3.0.1 \
     scikit-posthocs==0.14.0 \
     scipy==1.10.1 \
     seaborn==0.13.2 \

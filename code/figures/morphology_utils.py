@@ -488,7 +488,7 @@ def plot_prop_for_mets_swb(ax, types, merge_df, type_column, prop_name, prop_lab
     ax.spines['right'].set_color('grey')
 
 
-def _compute_subclass_counts(subclass, soma_depths_df, metadata_morph_dend,
+def _compute_subclass_counts(subclass, metadata_transcriptomics, metadata_morph_dend,
                             metadata_morph_axon=None, metadata_ephys=None):
     """
     Compute transcriptomic, ephys, and morphology counts for a subclass.
@@ -497,8 +497,8 @@ def _compute_subclass_counts(subclass, soma_depths_df, metadata_morph_dend,
     ----------
     subclass : str
         Subclass label
-    soma_depths_df : pandas.DataFrame
-        Contains all specimens with soma depths and subclass_label column
+    metadata_transcriptomics : pandas.DataFrame
+        Full transcriptomic metadata with subclass_label column (all cells with transcriptomics)
     metadata_morph_dend : pandas.DataFrame
         Full dendrite morphology metadata with subclass_label column
     metadata_morph_axon : pandas.DataFrame, optional
@@ -511,8 +511,11 @@ def _compute_subclass_counts(subclass, soma_depths_df, metadata_morph_dend,
     tuple
         (transcriptomic_count, ephys_count, dendrite_morph_count, axon_morph_count)
     """
-    # T: All specimens in soma_depths_df for this subclass
-    t_count = (soma_depths_df['subclass_label'] == subclass).sum()
+    # T: All specimens with transcriptomics for this subclass
+    if metadata_transcriptomics is not None and 'subclass_label' in metadata_transcriptomics.columns:
+        t_count = (metadata_transcriptomics['subclass_label'] == subclass).sum()
+    else:
+        t_count = 0
 
     # E: Ephys specimens (if metadata provided)
     if metadata_ephys is not None and 'subclass_label' in metadata_ephys.columns:
@@ -538,8 +541,8 @@ def _compute_subclass_counts(subclass, soma_depths_df, metadata_morph_dend,
 def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, layer_labels, color_dict, ttype_order,
                        cluster_col='t_type', buffer=100, plot_scalebar=True, plot_somadepth=False,
                        plot_subclass_labels=False, ttype_to_subclass_dict=None,
-                       metadata_ephys=None, metadata_morph_dend=None, metadata_morph_axon=None,
-                       subclass_order=None):
+                       metadata_transcriptomics=None, metadata_ephys=None, metadata_morph_dend=None,
+                       metadata_morph_axon=None, subclass_order=None):
     """
     Plot morphology gallery with optional soma depth scatter.
 
@@ -573,6 +576,8 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
         If True, add subclass labels and counts above type labels (default=False)
     ttype_to_subclass_dict : dict, optional
         Mapping from t_type to subclass_label. Required if plot_subclass_labels=True
+    metadata_transcriptomics : pandas.DataFrame, optional
+        Full transcriptomic metadata with 'subclass_label' column for T counts (all cells with transcriptomics). If None, T counts omitted
     metadata_ephys : pandas.DataFrame, optional
         Ephys metadata with 'subclass_label' column for E counts. If None, E counts omitted
     metadata_morph_dend : pandas.DataFrame, optional
@@ -738,7 +743,7 @@ def plot_morpho_gallery(ax, gallery_cells, data, soma_depths_df, layer_info, lay
 
                 # Compute and format counts
                 t_count, e_count, md_count, ma_count = _compute_subclass_counts(
-                    subclass, soma_depths_df, metadata_morph_dend, metadata_morph_axon, metadata_ephys
+                    subclass, metadata_transcriptomics, metadata_morph_dend, metadata_morph_axon, metadata_ephys
                 )
 
                 # Format as two lines without brackets
