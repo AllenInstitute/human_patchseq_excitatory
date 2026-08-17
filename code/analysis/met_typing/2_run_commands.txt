@@ -1,1 +1,19 @@
+
+# ME clustering
 python -m drcme.bin.run_ephys_morph_clustering --input_json /root/capsule/scratch/20260807/MET_typing/config/me_clustering.json
+
+# Refine ME clustering
+python -m drcme.bin.run_refine_unstable_coclusters --input_json /root/capsule/scratch/20260807/MET_typing/config/me_clustering_refine.json
+
+# RFC to get ME alt mapping calls
+cd /root/capsule/code/analysis/met_typing
+python -m rf_subsample_me_assignments --input_json /root/capsule/scratch/20260807/MET_typing/config/alt_me_assignments.json
+
+# MET type definitions
+python -m 3_met_types_by_graph --input_json /root/capsule/scratch/20260807/MET_typing/config/met_types.json
+
+# Spectral co-clustering (orders me and t types for bubble plot) 
+python -m 4_spectral_coclustering_me_vs_ttype --input_json /root/capsule/scratch/20260807/MET_typing/config/spectral_coclustering.json
+
+# MET matrix graph plot
+python -m 5_fig_met_matrix_graph --input_json /root/capsule/scratch/20260807/MET_typing/config/met_matrix_graph_fig.json

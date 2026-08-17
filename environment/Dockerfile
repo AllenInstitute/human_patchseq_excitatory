@@ -1,4 +1,4 @@
-# hash:sha256:2794c238ed0f612ffa3db899438cf14dcdf1da8f44dc1fb8669c75166c53faa8
+# hash:sha256:8d57ff955cbbe00d585be0df3d10c8433950be6f8edf644d448661374db73f54
 ARG REGISTRY_HOST
 FROM $REGISTRY_HOST/codeocean/mambaforge3:23.1.0-4-python3.10.12-ubuntu22.04
 
@@ -9,12 +9,21 @@ COPY git-ask-pass /
 ENV CLAUDE_CODE_USE_BEDROCK=1
 ENV AWS_REGION=us-west-1
 
+RUN conda install -y --channel=conda-forge \
+        graphviz==8.1.0 \
+        pygraphviz==1.11 \
+    && conda clean -ya
+
 RUN pip install -U --no-cache-dir \
     adjusttext==1.4.0 \
     allensdk==2.16.2 \
     anndata==0.11.4 \
     cairosvg==2.9.0 \
+    descartes==1.1.0 \
+    igraph==1.0.0 \
     ipfx==2.0.0 \
+    kaleido==1.3.0 \
+    leidenalg==0.12.0 \
     matplotlib==3.10.9 \
     matplotlib-scalebar==0.9.0 \
     morph-utils==1.5.9 \
