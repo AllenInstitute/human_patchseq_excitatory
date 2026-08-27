@@ -222,34 +222,36 @@ def format_box_plot(ax):
     - Setting edge color to match original face color
     - Applying same color to whiskers, fliers, and other elements
     Compatible with matplotlib versions before and after 3.5.
+    Uses x-position matching to correctly assign colors to lines in grouped box plots.
     """
     box_patches = [patch for patch in ax.patches if type(patch) == PathPatch]
     if len(box_patches) == 0:  # in matplotlib older than 3.5, the boxes are stored in ax.artists
         box_patches = ax.artists
-    num_patches = len(box_patches)
-    if num_patches == 0:
+    if len(box_patches) == 0:
         return  # Nothing to format
-    lines_per_boxplot = len(ax.lines) // num_patches
-    for i, patch in enumerate(box_patches):
+
+    for patch in box_patches:
         # Set the linecolor on the patch to the facecolor, and set the facecolor to None
         col = patch.get_facecolor()
         patch.set_edgecolor(col)
         patch.set_facecolor('None')
 
+        # Get x-position of this patch to match with corresponding lines
+        # Use midpoint between min and max x-coordinates
+        vertices_x = patch.get_path().vertices[:, 0]
+        patch_x = (vertices_x.min() + vertices_x.max()) / 2.0
+
         # Each box has associated Line2D objects (to make the whiskers, fliers, etc.)
-        # Loop over them here, and use the same color as above
-        # For the last box, take all remaining lines to handle cases where lines don't divide evenly
-        if i == num_patches - 1:
-            start_idx = i * lines_per_boxplot
-            for line in ax.lines[start_idx:]:
-                line.set_color(col)
-                line.set_mfc(col)  # facecolor of fliers
-                line.set_mec(col)  # edgecolor of fliers
-        else:
-            for line in ax.lines[i * lines_per_boxplot: (i + 1) * lines_per_boxplot]:
-                line.set_color(col)
-                line.set_mfc(col)  # facecolor of fliers
-                line.set_mec(col)  # edgecolor of fliers
+        # Match lines by x-position to handle grouped box plots correctly
+        for line in ax.lines:
+            line_x_data = line.get_xdata()
+            if len(line_x_data) > 0:
+                line_x = line_x_data.mean()
+                # Match if within tolerance (0.05 units to handle floating point precision)
+                if abs(line_x - patch_x) < 0.05:
+                    line.set_color(col)
+                    line.set_mfc(col)  # facecolor of fliers
+                    line.set_mec(col)  # edgecolor of fliers
 
 
 def find_ttype_key(keys, substring):
