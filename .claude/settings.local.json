@@ -8,7 +8,13 @@
       "Bash(tee /tmp/notebook_execution.log)",
       "Bash(tee /tmp/notebook_execution2.log)",
       "Bash(tee /tmp/notebook_execution3.log)",
-      "Bash(ls -lh /root/capsule/code/analysis/dprime/*.ipynb)"
+      "Bash(ls -lh /root/capsule/code/analysis/dprime/*.ipynb)",
+      "Bash(find /root/capsule -name l23_comparison*.csv)",
+      "Bash(python compare_fdr_approaches.py)",
+      "Bash(find data:*)",
+      "Bash(find . -name *stats*.csv -o -name *box_plot*.csv)",
+      "Bash(git restore:*)",
+      "Bash(python compare_fdr_results.py)"
     ]
   }
 }
