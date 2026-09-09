@@ -14,7 +14,8 @@
       "Bash(find data:*)",
       "Bash(find . -name *stats*.csv -o -name *box_plot*.csv)",
       "Bash(git restore:*)",
-      "Bash(python compare_fdr_results.py)"
+      "Bash(python compare_fdr_results.py)",
+      "Bash(python code/analysis/morphology_viewers/compare_conditions.py)"
     ]
   }
 }
