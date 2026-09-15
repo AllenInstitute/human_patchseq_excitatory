@@ -366,11 +366,12 @@ def plot_dendrite_depth_profiles_subclass(ax, merge_df, type_column, types, hist
 
 
 def plot_axon_depth_profiles_subclass(ax, merge_df, type_column, types, hist_df, axon_cols,
-        layer_edges, plot_quantiles=None, path_color="#cccccc", spacing=200, bin_width=5, plot_scalebar=True): #xoffsets, 
+        layer_edges, plot_quantiles=None, path_color="#cccccc", spacing=200, bin_width=5, plot_scalebar=True): #xoffsets,
     if plot_quantiles is None:
         plot_quantiles = np.linspace(0, 1, 5)
 
-    xoffset = 0 
+    xoffset = 0
+    xoffsets = {}
     for type in types:
         # xoffset = xoffsets[type]
         spec_ids = merge_df.loc[merge_df[type_column] == type, :].sort_values("Soma aligned distance from pia").index
@@ -386,6 +387,7 @@ def plot_axon_depth_profiles_subclass(ax, merge_df, type_column, types, hist_df,
             -np.arange(len(axon_avg))[zero_mask] * bin_width,
             c=color, linewidth=1, zorder=10
         )
+        xoffsets[type] = xoffset
         xoffset += spacing
 
     sns.despine(ax=ax, bottom=True, left=True)
@@ -397,6 +399,8 @@ def plot_axon_depth_profiles_subclass(ax, merge_df, type_column, types, hist_df,
     if plot_scalebar:
         scalebar = ScaleBar(1, "um", location='lower left', frameon=False, fixed_value=250, color = 'grey', font_properties={'size': 6})
         ax.add_artist(scalebar)
+
+    return xoffsets
 
 
 def plot_prop_for_mets_swb(ax, types, merge_df, type_column, prop_name, prop_label,
@@ -856,7 +860,7 @@ def overlay_morphologies(ax, specimen_dict, xoffsets, data, color_dict, compartm
         basic_morph_plot(morph, morph_colors=morph_colors, ax=ax, xoffset=xoffset, alpha=alpha, lw=0.05)
 
 
-def plot_distal_apicals(data_dict, groups, ax, xoffsets, buffer_dict, color_dict, plot_legend=True):
+def plot_distal_apicals(data_dict, groups, ax, xoffsets, buffer_dict, color_dict, plot_legend=True, plot_apicals=True):
     """
     Plot soma locations and distal apical tips with jitter.
 
@@ -876,6 +880,8 @@ def plot_distal_apicals(data_dict, groups, ax, xoffsets, buffer_dict, color_dict
         Group to color mapping
     plot_legend : bool, optional
         If True, add legend
+    plot_apicals : bool, optional
+        If True, plot apical tips. If False, plot only somas
 
     Notes
     -----
@@ -902,20 +908,21 @@ def plot_distal_apicals(data_dict, groups, ax, xoffsets, buffer_dict, color_dict
         sns.scatterplot(x=soma_depths_x, y=soma_depths_y, ax=ax, color=hex_color, edgecolor=hex_color,
                        s=0.5, marker="$\circ$", zorder=10)
 
-        # Plot distal apicals second
-        distal_apicals_y = data_dict[group]['apicals']
-        distal_apicals_x = np.ones(len(distal_apicals_y)) * xoffset
-        jitter = np.array([random.randint(-2000, 2000) * 0.01 for n in distal_apicals_y])
-        distal_apicals_x = distal_apicals_x + jitter
-        sns.scatterplot(x=distal_apicals_x, y=distal_apicals_y, ax=ax, color=dark_hex, edgecolor=dark_hex,
-                       s=1, marker=r"$\bigtriangleup$", zorder=10)
+        # Plot distal apicals second (optional)
+        if plot_apicals:
+            distal_apicals_y = data_dict[group]['apicals']
+            distal_apicals_x = np.ones(len(distal_apicals_y)) * xoffset
+            jitter = np.array([random.randint(-2000, 2000) * 0.01 for n in distal_apicals_y])
+            distal_apicals_x = distal_apicals_x + jitter
+            sns.scatterplot(x=distal_apicals_x, y=distal_apicals_y, ax=ax, color=dark_hex, edgecolor=dark_hex,
+                           s=1, marker=r"$\bigtriangleup$", zorder=10)
 
     if plot_legend:
         # Create custom legend handles
-        legend_elements = [
-            Line2D([0], [0], color='grey', marker=r'$\bigtriangleup$', linestyle='None', label='apical', markersize=1),
-            Line2D([0], [0], color='lightgrey', marker=r'$\circ$', linestyle='None', label='soma', markersize=1)
-        ]
+        legend_elements = []
+        if plot_apicals:
+            legend_elements.append(Line2D([0], [0], color='grey', marker=r'$\bigtriangleup$', linestyle='None', label='apical', markersize=1))
+        legend_elements.append(Line2D([0], [0], color='lightgrey', marker=r'$\circ$', linestyle='None', label='soma', markersize=1))
 
         # Add legend outside right
         ax.legend(
