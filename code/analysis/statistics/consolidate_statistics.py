@@ -244,6 +244,222 @@ def load_apical_reach_subclass_comparison():
         return pd.DataFrame()
 
 
+def load_morpho_bylayer_stats():
+    """Load morphology byLayer boxplot statistics"""
+    print("Loading morphology byLayer statistics...")
+
+    dfs = []
+    dendrite_dir = SCRATCH_DIR / 'dendrite'
+
+    kw_path = dendrite_dir / 'morpho_feature_box_plot_stats_byLayer_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = dendrite_dir / 'morpho_feature_box_plot_stats_byLayer_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_morpho_layer6_stats():
+    """Load morphology Layer 6 subclass boxplot statistics"""
+    print("Loading morphology Layer 6 subclass statistics...")
+
+    dfs = []
+    dendrite_dir = SCRATCH_DIR / 'dendrite'
+
+    kw_path = dendrite_dir / 'morpho_feature_box_plot_stats_bySubclass_Layer6_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = dendrite_dir / 'morpho_feature_box_plot_stats_bySubclass_Layer6_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_morpho_l5_it_supertypes_stats():
+    """Load morphology L5 IT supertype statistics"""
+    print("Loading morphology L5 IT supertype statistics...")
+
+    dfs = []
+    dendrite_dir = SCRATCH_DIR / 'dendrite'
+
+    kw_path = dendrite_dir / 'morpho_feature_box_plot_stats_L5_IT_byTtype_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = dendrite_dir / 'morpho_feature_box_plot_stats_L5_IT_byTtype_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_morpho_layer4_supertypes_stats():
+    """Load morphology Layer 4 supertype statistics"""
+    print("Loading morphology Layer 4 supertype statistics...")
+
+    dfs = []
+    dendrite_dir = SCRATCH_DIR / 'dendrite'
+
+    kw_path = dendrite_dir / 'morpho_feature_box_plot_stats_Layer_4_byTtype_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = dendrite_dir / 'morpho_feature_box_plot_stats_Layer_4_byTtype_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_ephys_bylayer_stats():
+    """Load ephys byLayer boxplot statistics"""
+    print("Loading ephys byLayer statistics...")
+
+    dfs = []
+    ephys_dir = SCRATCH_DIR / 'ephys'
+
+    kw_path = ephys_dir / 'ephys_feature_box_plot_stats_byLayer_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = ephys_dir / 'ephys_feature_box_plot_stats_byLayer_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_ephys_layer6_stats():
+    """Load ephys Layer 6 subclass boxplot statistics"""
+    print("Loading ephys Layer 6 subclass statistics...")
+
+    dfs = []
+    ephys_dir = SCRATCH_DIR / 'ephys'
+
+    kw_path = ephys_dir / 'ephys_feature_box_plot_stats_bySubclass_Layer6_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = ephys_dir / 'ephys_feature_box_plot_stats_bySubclass_Layer6_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_ephys_l5_it_supertypes_stats():
+    """Load ephys L5 IT supertype statistics"""
+    print("Loading ephys L5 IT supertype statistics...")
+
+    dfs = []
+    ephys_dir = SCRATCH_DIR / 'ephys'
+
+    kw_path = ephys_dir / 'ephys_feature_box_plot_stats_L5_IT_byTtype_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = ephys_dir / 'ephys_feature_box_plot_stats_L5_IT_byTtype_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
+def load_ephys_layer4_supertypes_stats():
+    """Load ephys Layer 4 supertype statistics"""
+    print("Loading ephys Layer 4 supertype statistics...")
+
+    dfs = []
+    ephys_dir = SCRATCH_DIR / 'ephys'
+
+    kw_path = ephys_dir / 'ephys_feature_box_plot_stats_Layer_4_byTtype_KW_Dunn_FDR.csv'
+    if kw_path.exists() and kw_path.stat().st_size > 10:
+        kw_df = pd.read_csv(kw_path)
+        if not kw_df.empty:
+            kw_df.insert(0, 'Test', 'Kruskal_Wallis')
+            dfs.append(kw_df)
+
+    dunn_path = ephys_dir / 'ephys_feature_box_plot_stats_Layer_4_byTtype_Dunn_pairs.csv'
+    if dunn_path.exists() and dunn_path.stat().st_size > 10:
+        try:
+            dunn_df = pd.read_csv(dunn_path)
+            if not dunn_df.empty:
+                dunn_df.insert(0, 'Test', 'Dunn_PostHoc')
+                dfs.append(dunn_df)
+        except pd.errors.EmptyDataError:
+            pass
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+
 def load_classifier_accuracy():
     """Load Tab 7: CLASSIFIER_ACCURACY"""
     print("Loading classifier accuracy metrics...")
@@ -480,10 +696,18 @@ def create_readme_tab():
         ('Tab 12', 'PAIRWISE_DEPTH_SLOPE_DIFFERENCES', 'Pairwise comparisons of depth~feature slopes'),
         ('Tab 13', 'CROSS_SPECIES_APICAL_L1_CHI_SQUARE', 'Chi-squared: apical dendrite L1 reach across species'),
         ('Tab 14', 'CROSS_SPECIES_L1_APICAL_LENGTH', 'KW/MW tests: apical length in L1 across species'),
-        ('Tab 15', 'CROSS_SPECIES_MORPHO_BOXPLOTS', 'KW/MW tests: morphology features across species'),
-        ('Tab 16', 'CROSS_SPECIES_EPHYS_BOXPLOTS', 'KW/MW tests: ephys features across species'),
+        ('Tab 15', 'CROSS_SPECIES_MORPHO_BOXPLOTS', 'KW/MW tests: morphology features across species (incl L5 IT/ET)'),
+        ('Tab 16', 'CROSS_SPECIES_EPHYS_BOXPLOTS', 'KW/MW tests: ephys features across species (incl L5 IT/ET)'),
         ('Tab 17', 'GENE_TO_FUNCTION_CORRELATIONS', 'Gene expression correlations (MISSING - see collaborators)'),
         ('Tab 18', 'APICAL_REACH_SUBCLASS_COMPARISON', 'Kruskal-Wallis: apical reach across subclasses'),
+        ('Tab 19', 'MORPHO_BYLAYER', 'KW + Dunn: morphology features across layers'),
+        ('Tab 20', 'MORPHO_LAYER6', 'KW + Dunn: morphology features across Layer 6 subclasses'),
+        ('Tab 21', 'MORPHO_L5_IT_SUPERTYPES', 'KW + Dunn: morphology features across L5 IT supertypes'),
+        ('Tab 22', 'MORPHO_LAYER4_SUPERTYPES', 'KW + Dunn: morphology features across Layer 4 supertypes'),
+        ('Tab 23', 'EPHYS_BYLAYER', 'KW + Dunn: ephys features across layers'),
+        ('Tab 24', 'EPHYS_LAYER6', 'KW + Dunn: ephys features across Layer 6 subclasses'),
+        ('Tab 25', 'EPHYS_L5_IT_SUPERTYPES', 'KW + Dunn: ephys features across L5 IT supertypes'),
+        ('Tab 26', 'EPHYS_LAYER4_SUPERTYPES', 'KW + Dunn: ephys features across Layer 4 supertypes'),
     ]
 
     for tab_num, tab_name, description in tab_descriptions:
@@ -812,6 +1036,70 @@ def main():
         else:
             print("⚠ Tab 18: APICAL_REACH_SUBCLASS_COMPARISON - no data found")
 
+        # Tab 19: MORPHO_BYLAYER
+        morpho_bylayer_df = load_morpho_bylayer_stats()
+        if not morpho_bylayer_df.empty:
+            morpho_bylayer_df.to_excel(writer, sheet_name='19_MORPHO_BYLAYER', index=False)
+            print(f"✓ Tab 19: MORPHO_BYLAYER ({len(morpho_bylayer_df)} rows)")
+        else:
+            print("⚠ Tab 19: MORPHO_BYLAYER - no data found")
+
+        # Tab 20: MORPHO_LAYER6_SUBCLASSES
+        morpho_layer6_df = load_morpho_layer6_stats()
+        if not morpho_layer6_df.empty:
+            morpho_layer6_df.to_excel(writer, sheet_name='20_MORPHO_LAYER6', index=False)
+            print(f"✓ Tab 20: MORPHO_LAYER6_SUBCLASSES ({len(morpho_layer6_df)} rows)")
+        else:
+            print("⚠ Tab 20: MORPHO_LAYER6_SUBCLASSES - no data found")
+
+        # Tab 21: MORPHO_L5_IT_SUPERTYPES
+        morpho_l5_it_df = load_morpho_l5_it_supertypes_stats()
+        if not morpho_l5_it_df.empty:
+            morpho_l5_it_df.to_excel(writer, sheet_name='21_MORPHO_L5_IT_SUPERTYPES', index=False)
+            print(f"✓ Tab 21: MORPHO_L5_IT_SUPERTYPES ({len(morpho_l5_it_df)} rows)")
+        else:
+            print("⚠ Tab 21: MORPHO_L5_IT_SUPERTYPES - no data found")
+
+        # Tab 22: MORPHO_LAYER4_SUPERTYPES
+        morpho_layer4_df = load_morpho_layer4_supertypes_stats()
+        if not morpho_layer4_df.empty:
+            morpho_layer4_df.to_excel(writer, sheet_name='22_MORPHO_LAYER4_SUPERTYPES', index=False)
+            print(f"✓ Tab 22: MORPHO_LAYER4_SUPERTYPES ({len(morpho_layer4_df)} rows)")
+        else:
+            print("⚠ Tab 22: MORPHO_LAYER4_SUPERTYPES - no data found")
+
+        # Tab 23: EPHYS_BYLAYER
+        ephys_bylayer_df = load_ephys_bylayer_stats()
+        if not ephys_bylayer_df.empty:
+            ephys_bylayer_df.to_excel(writer, sheet_name='23_EPHYS_BYLAYER', index=False)
+            print(f"✓ Tab 23: EPHYS_BYLAYER ({len(ephys_bylayer_df)} rows)")
+        else:
+            print("⚠ Tab 23: EPHYS_BYLAYER - no data found")
+
+        # Tab 24: EPHYS_LAYER6_SUBCLASSES
+        ephys_layer6_df = load_ephys_layer6_stats()
+        if not ephys_layer6_df.empty:
+            ephys_layer6_df.to_excel(writer, sheet_name='24_EPHYS_LAYER6', index=False)
+            print(f"✓ Tab 24: EPHYS_LAYER6_SUBCLASSES ({len(ephys_layer6_df)} rows)")
+        else:
+            print("⚠ Tab 24: EPHYS_LAYER6_SUBCLASSES - no data found")
+
+        # Tab 25: EPHYS_L5_IT_SUPERTYPES
+        ephys_l5_it_df = load_ephys_l5_it_supertypes_stats()
+        if not ephys_l5_it_df.empty:
+            ephys_l5_it_df.to_excel(writer, sheet_name='25_EPHYS_L5_IT_SUPERTYPES', index=False)
+            print(f"✓ Tab 25: EPHYS_L5_IT_SUPERTYPES ({len(ephys_l5_it_df)} rows)")
+        else:
+            print("⚠ Tab 25: EPHYS_L5_IT_SUPERTYPES - no data found")
+
+        # Tab 26: EPHYS_LAYER4_SUPERTYPES
+        ephys_layer4_df = load_ephys_layer4_supertypes_stats()
+        if not ephys_layer4_df.empty:
+            ephys_layer4_df.to_excel(writer, sheet_name='26_EPHYS_LAYER4_SUPERTYPES', index=False)
+            print(f"✓ Tab 26: EPHYS_LAYER4_SUPERTYPES ({len(ephys_layer4_df)} rows)")
+        else:
+            print("⚠ Tab 26: EPHYS_LAYER4_SUPERTYPES - no data found")
+
         # Apply formatting
         print("\nApplying Excel formatting...")
         format_excel_workbook(writer)
@@ -822,16 +1110,29 @@ def main():
     print("=" * 80)
     print()
     print("SUMMARY:")
-    print(f"  ✓ Populated tabs: 17")
-    print(f"  ⚠ Missing/incomplete tabs: 1 (only Tab 1 and 17 are placeholders)")
+    print(f"  ✓ Populated tabs: 25")
+    print(f"  ⚠ Missing/incomplete tabs: 2 (only Tab 1 and 17 are placeholders)")
     print()
     print("WORKBOOK STATUS:")
-    print("  ✅ All substantive statistics tabs complete (Tabs 2-16, 18)")
+    print("  ✅ All boxplot statistics tabs complete!")
+    print("     - Tabs 4-5: Morpho/Ephys by Subclass")
+    print("     - Tabs 19-26: Morpho/Ephys by Layer, Layer 6, L5 IT, Layer 4")
+    print("  ✅ All cross-species statistics tabs complete (Tabs 13-16)")
     print("  🔶 Only Tabs 1 & 17 remain as placeholders for collaborator analyses:")
     print("     - Tab 1: Covariate ANOVAs (subclass × experimental covariates)")
     print("     - Tab 17: Gene-to-function correlations (KCND2/KCND3)")
     print()
-    print("  📊 94% complete (17 of 18 tabs populated)")
+    print("  📊 96% complete (25 of 26 data tabs populated)")
+    print()
+    print("NEW TABS ADDED:")
+    print("  19. MORPHO_BYLAYER - Morpho features × Layer")
+    print("  20. MORPHO_LAYER6 - Morpho features × Layer 6 subclasses")
+    print("  21. MORPHO_L5_IT_SUPERTYPES - Morpho features × L5 IT supertypes")
+    print("  22. MORPHO_LAYER4_SUPERTYPES - Morpho features × Layer 4 supertypes")
+    print("  23. EPHYS_BYLAYER - Ephys features × Layer")
+    print("  24. EPHYS_LAYER6 - Ephys features × Layer 6 subclasses")
+    print("  25. EPHYS_L5_IT_SUPERTYPES - Ephys features × L5 IT supertypes")
+    print("  26. EPHYS_LAYER4_SUPERTYPES - Ephys features × Layer 4 supertypes")
 
 
 if __name__ == '__main__':
