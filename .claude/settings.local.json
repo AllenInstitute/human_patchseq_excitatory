@@ -30,7 +30,12 @@
       "Bash(wc -l primate_subclass_morpho_feature_box_plot_stats*.csv)",
       "Bash(md5sum primate_subclass_morpho_feature_box_plot_stats*.csv)",
       "Bash(find /root/capsule -type f \\\\\\(-name *confusion* -o -name *accuracy* -o -name *f1* -o -name *classifier* \\\\\\))",
-      "Bash(grep \",mouse$\" /root/capsule/scratch/20260807/species_comparison/species_subclass_data.csv)"
+      "Bash(grep \",mouse$\" /root/capsule/scratch/20260807/species_comparison/species_subclass_data.csv)",
+      "Bash(jq -r '.cells[] | select\\(.cell_type == \"\"\"\"code\"\"\"\"\\) | .source | join\\(\"\"\"\"\"\"\"\"\\)' 1_species_box_plots_depth_matched_morpho.ipynb)",
+      "Bash(jq -r '.cells[] | select\\(.cell_type == \"\"\"\"code\"\"\"\"\\) | .source | join\\(\"\"\"\"\"\"\"\"\\)' 3_apical_in_l1.ipynb)",
+      "Bash(jq -r '.cells[] | select\\(.cell_type == \"\"\"\"code\"\"\"\"\\) | .source | join\\(\"\"\"\"\"\"\"\"\\)' 4_species_box_plots_depth_matched_ephys.ipynb)",
+      "Bash(grep -n \"FDR correction\" /root/capsule/code/analysis/statistics/*.ipynb)",
+      "Bash(grep -n \"posthoc_dunn\" /root/capsule/code/analysis/statistics/*.ipynb)"
     ]
   }
 }
