@@ -29,7 +29,8 @@
       "Read(//root/capsule/**)",
       "Bash(wc -l primate_subclass_morpho_feature_box_plot_stats*.csv)",
       "Bash(md5sum primate_subclass_morpho_feature_box_plot_stats*.csv)",
-      "Bash(find /root/capsule -type f \\\\\\(-name *confusion* -o -name *accuracy* -o -name *f1* -o -name *classifier* \\\\\\))"
+      "Bash(find /root/capsule -type f \\\\\\(-name *confusion* -o -name *accuracy* -o -name *f1* -o -name *classifier* \\\\\\))",
+      "Bash(grep \",mouse$\" /root/capsule/scratch/20260807/species_comparison/species_subclass_data.csv)"
     ]
   }
 }
