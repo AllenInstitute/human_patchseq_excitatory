@@ -35,7 +35,8 @@
       "Bash(jq -r '.cells[] | select\\(.cell_type == \"\"\"\"code\"\"\"\"\\) | .source | join\\(\"\"\"\"\"\"\"\"\\)' 3_apical_in_l1.ipynb)",
       "Bash(jq -r '.cells[] | select\\(.cell_type == \"\"\"\"code\"\"\"\"\\) | .source | join\\(\"\"\"\"\"\"\"\"\\)' 4_species_box_plots_depth_matched_ephys.ipynb)",
       "Bash(grep -n \"FDR correction\" /root/capsule/code/analysis/statistics/*.ipynb)",
-      "Bash(grep -n \"posthoc_dunn\" /root/capsule/code/analysis/statistics/*.ipynb)"
+      "Bash(grep -n \"posthoc_dunn\" /root/capsule/code/analysis/statistics/*.ipynb)",
+      "Bash(jupyter execute:*)"
     ]
   }
 }
