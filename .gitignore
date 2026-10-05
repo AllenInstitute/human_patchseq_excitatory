@@ -5,4 +5,4 @@ temp*
 todo*
 archive*
 *.pyc
-/root/capsule/data/human/electrophysiology/subthreshold/20260807/*
+data/human/electrophysiology/subthreshold/20260807/*
