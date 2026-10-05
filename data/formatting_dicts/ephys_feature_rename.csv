@@ -1,0 +1,27 @@
+old_feature_name,new_feature_name
+combined_upstroke_downstroke_ratio,AP up/down ratio
+combined_updown_ratio,AP up/down ratio
+combined_width,AP width (ms)
+combined_upstroke,AP ustroke
+combined_downstroke,AP downstroke
+combined_sag,Sag
+combined_baseline,Resting membrane potential (RMP)
+combined_input_resistance_SS,Input resistance
+combined_tau,Tau
+combined_ap_peak,AP peak
+combined_ap_height,AP height
+combined_trough_v,Trough voltage
+combined_fast_trough_v,Fast trough voltage
+combined_peak_freq_chirp,Chirp peak
+combined_ap_threshold,AP threshold
+combined_peak_impedance_chirp,ZAP (peak impedance)
+rheobase_i,Rheobase current
+fi_fit_slope,FI slope
+latency,Latency
+avg_rate,Avg spike rate
+mean_isi,Mean ISI
+isi_adapt_ratio,ISI adaptation ratio
+trough_slowdeltav,Slow trough absolute voltage
+depth_from_pia_norm,Normalized depth from pia
+adapt_mean,Adaptation mean
+first_isi_inv,Initial firing frequency

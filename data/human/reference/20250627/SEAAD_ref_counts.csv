@@ -1,0 +1,128 @@
+supertype,supertype_counts,supertype_frac_of_subclass,subclass_label,subclass_counts,class_label,layer
+Chandelier_1,464,0.678362573,Chandelier,684,Neuronal: GABAergic,
+Chandelier_2,220,0.321637427,Chandelier,684,Neuronal: GABAergic,
+Lamp5_1,252,0.075089392,Lamp5,3356,Neuronal: GABAergic,
+Lamp5_2,1853,0.552145411,Lamp5,3356,Neuronal: GABAergic,
+Lamp5_3,447,0.133194279,Lamp5,3356,Neuronal: GABAergic,
+Lamp5_4,113,0.033671037,Lamp5,3356,Neuronal: GABAergic,
+Lamp5_5,510,0.151966627,Lamp5,3356,Neuronal: GABAergic,
+Lamp5_6,181,0.053933254,Lamp5,3356,Neuronal: GABAergic,
+Lamp5_Lhx6_1,2147,1,Lamp5 Lhx6,2147,Neuronal: GABAergic,
+Pax6_1,391,0.593323217,Pax6,659,Neuronal: GABAergic,
+Pax6_2,84,0.127465857,Pax6,659,Neuronal: GABAergic,
+Pax6_3,65,0.098634294,Pax6,659,Neuronal: GABAergic,
+Pax6_4,119,0.180576631,Pax6,659,Neuronal: GABAergic,
+Pvalb_1,915,0.08450314,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_10,355,0.032785371,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_12,482,0.044514222,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_13,341,0.031492427,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_14,430,0.039711858,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_15,4399,0.406261544,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_2,1215,0.112209088,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_3,535,0.04940894,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_5,281,0.025951238,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_6,326,0.03010713,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_7,291,0.026874769,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_8,168,0.015515331,Pvalb,10828,Neuronal: GABAergic,
+Pvalb_9,1090,0.100664943,Pvalb,10828,Neuronal: GABAergic,
+Sncg_1,334,0.199165176,Sncg,1677,Neuronal: GABAergic,
+Sncg_2,83,0.049493143,Sncg,1677,Neuronal: GABAergic,
+Sncg_3,99,0.059033989,Sncg,1677,Neuronal: GABAergic,
+Sncg_4,366,0.218246869,Sncg,1677,Neuronal: GABAergic,
+Sncg_5,248,0.147883125,Sncg,1677,Neuronal: GABAergic,
+Sncg_6,242,0.144305307,Sncg,1677,Neuronal: GABAergic,
+Sncg_8,305,0.181872391,Sncg,1677,Neuronal: GABAergic,
+Sst Chodl_1,79,0.496855346,Sst Chodl,159,Neuronal: GABAergic,
+Sst Chodl_2,80,0.503144654,Sst Chodl,159,Neuronal: GABAergic,
+Sst_1,263,0.021221657,Sst,12393,Neuronal: GABAergic,
+Sst_10,702,0.05664488,Sst,12393,Neuronal: GABAergic,
+Sst_11,377,0.030420399,Sst,12393,Neuronal: GABAergic,
+Sst_12,768,0.061970467,Sst,12393,Neuronal: GABAergic,
+Sst_13,1651,0.133220366,Sst,12393,Neuronal: GABAergic,
+Sst_19,1742,0.140563221,Sst,12393,Neuronal: GABAergic,
+Sst_2,367,0.029613491,Sst,12393,Neuronal: GABAergic,
+Sst_20,392,0.031630759,Sst,12393,Neuronal: GABAergic,
+Sst_22,234,0.018881627,Sst,12393,Neuronal: GABAergic,
+Sst_23,457,0.036875656,Sst,12393,Neuronal: GABAergic,
+Sst_25,1382,0.111514565,Sst,12393,Neuronal: GABAergic,
+Sst_3,1874,0.151214395,Sst,12393,Neuronal: GABAergic,
+Sst_4,477,0.03848947,Sst,12393,Neuronal: GABAergic,
+Sst_5,577,0.046558541,Sst,12393,Neuronal: GABAergic,
+Sst_7,245,0.019769225,Sst,12393,Neuronal: GABAergic,
+Sst_9,885,0.071411281,Sst,12393,Neuronal: GABAergic,
+Vip_1,1050,0.113550341,Vip,9247,Neuronal: GABAergic,
+Vip_11,783,0.084676111,Vip,9247,Neuronal: GABAergic,
+Vip_12,404,0.043689845,Vip,9247,Neuronal: GABAergic,
+Vip_13,573,0.061966043,Vip,9247,Neuronal: GABAergic,
+Vip_14,137,0.014815616,Vip,9247,Neuronal: GABAergic,
+Vip_15,625,0.067589488,Vip,9247,Neuronal: GABAergic,
+Vip_16,139,0.015031902,Vip,9247,Neuronal: GABAergic,
+Vip_18,382,0.041310695,Vip,9247,Neuronal: GABAergic,
+Vip_19,1081,0.116902779,Vip,9247,Neuronal: GABAergic,
+Vip_2,686,0.074186223,Vip,9247,Neuronal: GABAergic,
+Vip_21,154,0.01665405,Vip,9247,Neuronal: GABAergic,
+Vip_23,1040,0.112468909,Vip,9247,Neuronal: GABAergic,
+Vip_4,1253,0.135503407,Vip,9247,Neuronal: GABAergic,
+Vip_5,227,0.024548502,Vip,9247,Neuronal: GABAergic,
+Vip_6,268,0.028982373,Vip,9247,Neuronal: GABAergic,
+Vip_9,445,0.048123716,Vip,9247,Neuronal: GABAergic,
+L2/3 IT_1,9488,0.330454166,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_10,2692,0.093758707,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_12,1350,0.047018668,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_13,3669,0.127786291,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_2,121,0.004214266,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_3,1014,0.035316244,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_5,3300,0.114934522,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_6,5660,0.19713012,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_7,540,0.018807467,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L2/3 IT_8,878,0.030579549,L2/3 IT,28712,Neuronal: Glutamatergic,L2/3
+L4 IT_1,1830,0.108876725,L4 IT,16808,Neuronal: Glutamatergic,L4
+L4 IT_2,12683,0.754581152,L4 IT,16808,Neuronal: Glutamatergic,L4
+L4 IT_3,523,0.031116135,L4 IT,16808,Neuronal: Glutamatergic,L4
+L4 IT_4,1772,0.105425988,L4 IT,16808,Neuronal: Glutamatergic,L4
+L5 ET_1,107,0.288409704,L5 ET,371,Neuronal: Glutamatergic,L5
+L5 ET_2,264,0.711590296,L5 ET,371,Neuronal: Glutamatergic,L5
+L5 IT_1,1837,0.093820225,L5 IT,19580,Neuronal: Glutamatergic,L5
+L5 IT_2,7696,0.393054137,L5 IT,19580,Neuronal: Glutamatergic,L5
+L5 IT_3,1629,0.08319714,L5 IT,19580,Neuronal: Glutamatergic,L5
+L5 IT_5,3509,0.179213483,L5 IT,19580,Neuronal: Glutamatergic,L5
+L5 IT_6,1699,0.086772217,L5 IT,19580,Neuronal: Glutamatergic,L5
+L5 IT_7,3210,0.163942799,L5 IT,19580,Neuronal: Glutamatergic,L5
+L5/6 NP_1,1489,0.481098546,L5/6 NP,3095,Neuronal: Glutamatergic,L5
+L5/6 NP_2,1034,0.334087237,L5/6 NP,3095,Neuronal: Glutamatergic,L5
+L5/6 NP_3,118,0.03812601,L5/6 NP,3095,Neuronal: Glutamatergic,L5
+L5/6 NP_4,331,0.106946688,L5/6 NP,3095,Neuronal: Glutamatergic,L5
+L5/6 NP_6,123,0.039741519,L5/6 NP,3095,Neuronal: Glutamatergic,L5
+L6 CT_1,671,0.250093179,L6 CT,2683,Neuronal: Glutamatergic,L6
+L6 CT_2,1793,0.668281774,L6 CT,2683,Neuronal: Glutamatergic,L6
+L6 CT_3,129,0.048080507,L6 CT,2683,Neuronal: Glutamatergic,L6
+L6 CT_4,90,0.03354454,L6 CT,2683,Neuronal: Glutamatergic,L6
+L6 IT Car3_1,832,0.185300668,L6 IT Car3,4490,Neuronal: Glutamatergic,L6
+L6 IT Car3_2,1252,0.278841871,L6 IT Car3,4490,Neuronal: Glutamatergic,L6
+L6 IT Car3_3,2406,0.535857461,L6 IT Car3,4490,Neuronal: Glutamatergic,L6
+L6 IT_1,923,0.154710023,L6 IT,5966,Neuronal: Glutamatergic,L6
+L6 IT_2,5043,0.845289977,L6 IT,5966,Neuronal: Glutamatergic,L6
+L6b_1,140,0.046948357,L6b,2982,Neuronal: Glutamatergic,L6
+L6b_2,245,0.082159624,L6b,2982,Neuronal: Glutamatergic,L6
+L6b_3,48,0.016096579,L6b,2982,Neuronal: Glutamatergic,L6
+L6b_4,205,0.068745808,L6b,2982,Neuronal: Glutamatergic,L6
+L6b_5,110,0.036887995,L6b,2982,Neuronal: Glutamatergic,L6
+L6b_6,2234,0.749161636,L6b,2982,Neuronal: Glutamatergic,L6
+Astro_1,87,0.033590734,Astrocyte,2590,Non-neuronal and Non-neural,
+Astro_2,2123,0.81969112,Astrocyte,2590,Non-neuronal and Non-neural,
+Astro_3,241,0.093050193,Astrocyte,2590,Non-neuronal and Non-neural,
+Astro_4,52,0.02007722,Astrocyte,2590,Non-neuronal and Non-neural,
+Astro_5,87,0.033590734,Astrocyte,2590,Non-neuronal and Non-neural,
+Endo_1,7,0.078651685,Endothelial,89,Non-neuronal and Non-neural,
+Endo_2,76,0.853932584,Endothelial,89,Non-neuronal and Non-neural,
+Endo_3,6,0.06741573,Endothelial,89,Non-neuronal and Non-neural,
+Micro-PVM_1,73,0.066666667,Microglia-PVM,1095,Non-neuronal and Non-neural,
+Micro-PVM_2,1022,0.933333333,Microglia-PVM,1095,Non-neuronal and Non-neural,
+Oligo_1,913,0.165608562,Oligodendrocyte,5513,Non-neuronal and Non-neural,
+Oligo_2,1966,0.356611645,Oligodendrocyte,5513,Non-neuronal and Non-neural,
+Oligo_3,46,0.008343914,Oligodendrocyte,5513,Non-neuronal and Non-neural,
+Oligo_4,2588,0.469435879,Oligodendrocyte,5513,Non-neuronal and Non-neural,
+OPC_1,51,0.024817518,OPC,2055,Non-neuronal and Non-neural,
+OPC_2,2004,0.975182482,OPC,2055,Non-neuronal and Non-neural,
+VLMC_1,80,0.64516129,VLMC,124,Non-neuronal and Non-neural,
+VLMC_2,44,0.35483871,VLMC,124,Non-neuronal and Non-neural,

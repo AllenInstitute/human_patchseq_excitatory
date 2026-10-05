@@ -1,0 +1,7 @@
+{
+    "soma": "grey", 
+    "axon": "firebrick", 
+    "basal": "steelblue",
+    "both" : "#02c225",
+    "apical": "orange"
+}

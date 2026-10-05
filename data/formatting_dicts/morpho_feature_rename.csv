@@ -1,0 +1,70 @@
+﻿old_feature_name,new_feature_name,type
+apical_dendrite_bias_x,Horizontal apical bias ,apical
+apical_dendrite_bias_y,Vertical apical bias ,apical
+apical_dendrite_depth_pc_0,Apical depth pc 0,apical
+apical_dendrite_depth_pc_1,Apical depth pc 1,apical
+apical_dendrite_depth_pc_2,Apical depth pc 2,apical
+apical_dendrite_depth_pc_3,Apical depth pc 3,apical
+apical_dendrite_depth_pc_4,Apical depth pc 4,apical
+apical_dendrite_early_branch_path,Early apical branch path,apical
+apical_dendrite_emd_with_basal_dendrite,Apical EMD with basal,both
+apical_dendrite_extent_x,Horizontal apical extent,apical
+apical_dendrite_extent_y,Vertical apical extent,apical
+apical_dendrite_frac_above_basal_dendrite,Fraction of apical above basal,both
+apical_dendrite_frac_below_basal_dendrite,Fraction of apical below basal,both
+apical_dendrite_frac_intersect_basal_dendrite,Fraction of apical intersecting with basal,both
+apical_dendrite_max_branch_order,Max apical branch order,apical
+apical_dendrite_max_euclidean_distance,Max apical euclidean distance,apical
+apical_dendrite_max_path_distance,Max apical path distance,apical
+apical_dendrite_mean_contraction,Mean apical contraction,apical
+apical_dendrite_mean_diameter,Mean apical diameter,apical
+apical_dendrite_mean_moments_along_max_distance_projection,Mean apical branch distance,apical
+apical_dendrite_num_branches,Number of apical branches,apical
+apical_dendrite_num_outer_bifurcations,Number of apical outer bifurcations,apical
+apical_dendrite_soma_percentile_x,Horizontal apical soma percentile ,apical
+apical_dendrite_soma_percentile_y,Vertical apical soma percentile,apical
+apical_dendrite_std_moments_along_max_distance_projection,Std apical branch distance,apical
+apical_dendrite_total_length,Total apical length,apical
+apical_dendrite_total_surface_area,Total apical surface area,apical
+basal_dendrite_bias_x,Horizontal basal bias,basal
+basal_dendrite_bias_y,Vertical basal bias,basal
+basal_dendrite_calculate_number_of_stems,Number basal stems exiting soma,basal
+basal_dendrite_extent_x,Horizontal basal extent,basal
+basal_dendrite_extent_y,Vertical basal extent,basal
+basal_dendrite_frac_above_apical_dendrite,Fraction of basal above apical,both
+basal_dendrite_frac_below_apical_dendrite,Fraction of basal below apical,both
+basal_dendrite_frac_intersect_apical_dendrite,Fraction of basal intersecting with apical,both
+basal_dendrite_max_branch_order,Max basal branch order,basal
+basal_dendrite_max_euclidean_distance,Max basal euclidean distance,basal
+basal_dendrite_max_path_distance,Max basal path distance,basal
+basal_dendrite_mean_contraction,Mean basal contraction,basal
+basal_dendrite_mean_diameter,Mean basal diameter,basal
+basal_dendrite_num_branches,Number of basal branches,basal
+basal_dendrite_soma_percentile_x,Horizontal basal soma percentile,basal
+basal_dendrite_soma_percentile_y,Vertical basal soma percentile,basal
+basal_dendrite_stem_exit_down,Basal stem exit down,basal
+basal_dendrite_stem_exit_side,Basal stem exit side,basal
+basal_dendrite_stem_exit_up,Basal stem exit up,basal
+basal_dendrite_total_length,Basal total length,basal
+basal_dendrite_total_surface_area,Basal total surface area,basal
+soma_aligned_dist_from_pia,Soma aligned distance from pia,soma 
+soma_surface_area,Soma surface area,soma 
+axon_exit_distance,Axon exit distance,axon
+axon_exit_theta,Axon exit theta,axon
+axon_bias_x,Horizontal axon bias,axon
+axon_bias_y,Vertical axon bias,axon
+axon_depth_pc_0,Axon depth pc 0,axon
+axon_depth_pc_1,Axon depth pc 1,axon
+axon_depth_pc_2,Axon depth pc 2,axon
+axon_depth_pc_3,Axon depth pc 3,axon
+axon_depth_pc_4,Axon depth pc 4,axon
+axon_extent_x,Horizontal axon extent,axon
+axon_extent_y,Vertical axon extent,axon
+axon_max_branch_order,Max axon branch order,axon
+axon_max_euclidean_distance,Max axon euclidean distance,axon
+axon_max_path_distance,Max axon path distance,axon
+axon_mean_contraction,Mean axon contraction,axon
+axon_num_branches,Number of axon branches,axon
+axon_soma_percentile_x,Horizontal axon soma percentile,axon
+axon_soma_percentile_y,Vertical axon soma percentile,axon
+axon_total_length,Axon total length,axon

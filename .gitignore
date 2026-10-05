@@ -1,5 +1,3 @@
-/data/
-
 .vscode
 .codeocean
 .claude
@@ -7,3 +5,4 @@ temp*
 todo*
 archive*
 *.pyc
+/root/capsule/data/human/electrophysiology/subthreshold/20260807/*

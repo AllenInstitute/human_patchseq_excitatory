@@ -1,0 +1,70 @@
+feature_name,skeleton_keys_name,description,compartment,data_source
+Horizontal apical bias ,apical_dendrite_bias_x,Unsigned difference in extent in x  in one direction from the soma and the other.,dendrites,upright swc
+Vertical apical bias ,apical_dendrite_bias_y,Signed difference in extent in y in one direction from the soma and the other,dendrites,upright swc
+Early apical branch path,apical_dendrite_early_branch_path,Ratio of the maximum length of all the "shorter" branches to the maximum path length. "Shorter" branches are defined as those with the smaller path length at each bifurcation. profile histograms of one compartment type,dendrites,upright swc
+Horizontal apical extent,apical_dendrite_extent_x,Total extent in the x-direction (micron),dendrites,upright swc
+Vertical apical extent,apical_dendrite_extent_y,Total extent in the y-direction (micron),dendrites,upright swc
+Fraction of apical above basal,apical_dendrite_frac_above_basal_dendrite,% of apical dendrite nodes above the full y-extent of the basal dendrite nodes,dendrites,upright swc
+Fraction of apical below basal,apical_dendrite_frac_below_basal_dendrite,% of apical dendrite nodes below the full y-extent of the basal dendrite nodes,dendrites,upright swc
+Fraction of apical intersecting with basal,apical_dendrite_frac_intersect_basal_dendrite,% of apical dendrite nodes that overlap with the full y-extent of the basal dendrite nodes,dendrites,upright swc
+Max apical branch order,apical_dendrite_max_branch_order,The maximum number of bifurcations encountered between the soma and all neurite tips,dendrites,upright swc
+Max apical euclidean distance,apical_dendrite_max_euclidean_distance,The direct-line distance from the soma to the most distal node (micron),dendrites,upright swc
+Max apical path distance,apical_dendrite_max_path_distance,The path distance from the soma to the furthest neurite tip (micron),dendrites,upright swc
+Mean apical contraction,apical_dendrite_mean_contraction,"The average of the ratios of the summed euclidean distance between bifurcations, and between bifurcations and tips, to the summed path distance between same",dendrites,upright swc
+Mean apical branch distance,apical_dendrite_mean_moments_along_max_distance_projection,Average relative position of bifurcations projected to a line connecting the soma to the furthest node.,dendrites,upright swc
+Number of apical branches,apical_dendrite_num_branches,The number of individual branches in the morphology,dendrites,upright swc
+Number of apical outer bifurcations,apical_dendrite_num_outer_bifurcations,"The number of bifurcations found in the outer region of a tree, defined as outside a sphere with a radius of 50% the max. Euclidean distance. This feature was shifted by one and log-scaled for analysis.",dendrites,upright swc
+Horizontal apical soma percentile ,apical_dendrite_soma_percentile_x,"Percentile location of the x coordinate of the soma within the distribution of all x coordinates of the compartment nodes. For x- percentiles, the results were symmeterized (ranging only from 0 to 0.5) to prevent ï¿½handednessï¿½",dendrites,upright swc
+Vertical apical soma percentile,apical_dendrite_soma_percentile_y,Percentile location of the y coordinate of the soma within the distribution of all y coordinates of the compartment nodes.,dendrites,upright swc
+Std apical branch distance,apical_dendrite_std_moments_along_max_distance_projection,Standard deviation of relative position of bifurcations projected to a line connecting the soma to the furthest node.,dendrites,upright swc
+Total apical length,apical_dendrite_total_length,The combined length of all branches (micron),dendrites,upright swc
+Mean apical diameter,apical_dendrite_mean_diameter,Average diameter across all nodes in the apical dendrite (micron),dendrites,upright swc
+Total apical surface area,apical_dendrite_total_surface_area,Total surface area of the apical dendrite (micron),dendrites,upright swc
+Horizontal basal bias,basal_dendrite_bias_x,Unsigned difference in extent in x  in one direction from the soma and the other.,dendrites,upright swc
+Vertical basal bias,basal_dendrite_bias_y,Signed difference in extent in y in one direction from the soma and the other,dendrites,upright swc
+Number basal stems exiting soma,basal_dendrite_calculate_number_of_stems,Number of basal dendrite segments originating at the soma.,dendrites,upright swc
+Horizontal basal extent,basal_dendrite_extent_x,Total extent in the x-direction (micron),dendrites,upright swc
+Vertical basal extent,basal_dendrite_extent_y,Total extent in the y-direction (micron),dendrites,upright swc
+Fraction of basal above apical,basal_dendrite_frac_above_apical_dendrite,% of basal dendrite nodes above the full y-extent of the apical dendrite nodes,dendrites,upright swc
+Fraction of basal below apical,basal_dendrite_frac_below_apical_dendrite,% of basal dendrite nodes below the full y-extent of the apical dendrite nodes,dendrites,upright swc
+Fraction of basal intersecting with apical,basal_dendrite_frac_intersect_apical_dendrite,% of basal dendrite nodes that overlap with the full y-extent of the apical dendrite nodes,dendrites,upright swc
+Max basal branch order,basal_dendrite_max_branch_order,The maximum number of bifurcations encountered between the soma and all neurite tips,dendrites,upright swc
+Max basal euclidean distance,basal_dendrite_max_euclidean_distance,The direct-line distance from the soma to the most distal node (micron),dendrites,upright swc
+Max basal path distance,basal_dendrite_max_path_distance,The path distance from the soma to the furthest neurite tip (micron),dendrites,upright swc
+Mean basal contraction,basal_dendrite_mean_contraction,"The average of the ratios of the summed euclidean distance between bifurcations, and between bifurcations and tips, to the summed path distance between same",dendrites,upright swc
+Number of basal branches,basal_dendrite_num_branches,The number of individual branches in the morphology,dendrites,upright swc
+Horizontal basal soma percentile,basal_dendrite_soma_percentile_x,"Percentile location of the x coordinate of the soma within the distribution of all x coordinates of the compartment nodes. For x- percentiles, the results were symmeterized (ranging only from 0 to 0.5) to prevent ï¿½handednessï¿½",dendrites,upright swc
+Vertical basal soma percentile,basal_dendrite_soma_percentile_y,Percentile location of the y coordinate of the soma within the distribution of all y coordinates of the compartment nodes.,dendrites,upright swc
+Basal stem exit down,basal_dendrite_stem_exit_down,Normalized number of basal dendrite stems that exit the soma from the upper quadrant relative to the pia-white matter depth axis.,dendrites,upright swc
+Basal stem exit side,basal_dendrite_stem_exit_side,Normalized number of basal dendrite stems that exit the soma from the side quadrant relative to the pia-white matter depth axis. Only the side with the more stems is reported. ,dendrites,upright swc
+Basal stem exit up,basal_dendrite_stem_exit_up,Normalized number of basal dendrite stems that exit the soma from the lower quadrant relative to the pia-white matter depth axis.,dendrites,upright swc
+Basal total length,basal_dendrite_total_length,The combined length of all branches (micron),dendrites,upright swc
+Mean basal diameter,basal_dendrite_mean_diameter,Average diameter across all nodes in the basal dendrites (micron),dendrites,upright swc
+Basal total surface area,basal_dendrite_total_surface_area,Total surface area of all basal dendrites combined (micron),dendrites,upright swc
+Soma aligned distance from pia,soma_aligned_dist_from_pia,Distance between the pia and the soma,dendrites,upright swc
+Soma surface area,soma_surface_area,Surface area of the soma (micron),soma,upright swc
+Horizontal axon bias,axon_bias_x,Unsigned difference in extent in x  in one direction from the soma and the other.,axon,upright swc
+Vertical axon bias,axon_bias_y,Signed difference in extent in y in one direction from the soma and the other,axon,upright swc
+Axon exit distance,axon_exit_distance,The path distance from the axon root to the soma surface (micron),axon,upright swc
+Axon exit theta,axon_exit_theta,The relative radial position of the point where the neurite from which the axon derives exits the soma.,axon,upright swc
+Horizontal axon extent,axon_extent_x,Total extent in the x-direction (micron),axon,upright swc
+Vertical axon extent,axon_extent_y,Total extent in the y-direction (micron),axon,upright swc
+Max axon branch order,axon_max_branch_order,The maximum number of bifurcations encountered between the soma and all complete axon tips,axon,upright swc
+Max axon euclidean distance,axon_max_euclidean_distance,The direct-line distance from the soma to the most distal node (micron),axon,upright swc
+Max axon path distance,axon_max_path_distance,The path distance from the soma to the furthest neurite tip (micron),axon,upright swc
+Mean axon contraction,axon_mean_contraction,"The average of the ratios of the summed euclidean distance between bifurcations, and between bifurcations and tips, to the summed path distance between same",axon,upright swc
+Number of axon branches,axon_num_branches,The number of individual branches in the morphology,axon,upright swc
+Horizontal axon soma percentile,axon_soma_percentile_x,"Percentile location of the x coordinate of the soma within the distribution of all x coordinates of the compartment nodes. For x- percentiles, the results were symmeterized (ranging only from 0 to 0.5) to prevent ï¿½handednessï¿½",axon,upright swc
+Vertical axon soma percentile,axon_soma_percentile_y,Percentile location of the y coordinate of the soma within the distribution of all y coordinates of the compartment nodes.,axon,upright swc
+Axon total length,axon_total_length,The combined length of all branches (micron),axon,upright swc
+Apical depth pc 0,apical_dendrite_depth_pc_0,First principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise apical dendrite histogram. Histogram was constructed using 5 micron bins. ,dendrites,layer aligned swc
+Apical depth pc 1,apical_dendrite_depth_pc_1,Second principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise apical dendrite histogram. Histogram was constructed using 5 micron bins. ,dendrites,layer aligned swc
+Apical depth pc 2,apical_dendrite_depth_pc_2,Third principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise apical dendrite histogram. Histogram was constructed using 5 micron bins. ,dendrites,layer aligned swc
+Apical depth pc 3,apical_dendrite_depth_pc_3,Fourth principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise apical dendrite histogram. Histogram was constructed using 5 micron bins. ,dendrites,layer aligned swc
+Apical depth pc 4,apical_dendrite_depth_pc_4,Fifth principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise apical dendrite histogram. Histogram was constructed using 5 micron bins. ,dendrites,layer aligned swc
+Apical EMD with basal,apical_dendrite_emd_with_basal_dendrite,Earth moverï¿½s distance metric calculated between the normalized and aligned depth profile histograms of apical and basal dendrite,dendrites,layer aligned swc
+Axon depth pc 0,axon_depth_pc_0,First principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise axon histogram. Histogram was constructed using 5 micron bins. ,axon,layer aligned swc
+Axon depth pc 1,axon_depth_pc_1,Second principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise axon histogram. Histogram was constructed using 5 micron bins. ,axon,layer aligned swc
+Axon depth pc 2,axon_depth_pc_2,Third principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise axon histogram. Histogram was constructed using 5 micron bins. ,axon,layer aligned swc
+Axon depth pc 3,axon_depth_pc_3,Fourth principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise axon histogram. Histogram was constructed using 5 micron bins. ,axon,layer aligned swc
+Axon depth pc 4,axon_depth_pc_4,Fifth principal component that exceeds 5% explained variance from PCA performed on a laminar depth-wise axon histogram. Histogram was constructed using 5 micron bins. ,axon,layer aligned swc
