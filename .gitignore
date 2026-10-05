@@ -2,7 +2,8 @@
 
 .vscode
 .codeocean
-
+.claude
 temp*
 todo*
+archive*
 *.pyc
