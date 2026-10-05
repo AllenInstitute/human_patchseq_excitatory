@@ -1,6 +1,6 @@
-.vscode
-.codeocean
-.claude
+.vscode/
+.codeocean/
+.claude/
 temp*
 todo*
 archive*
