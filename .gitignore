@@ -6,3 +6,4 @@ todo*
 archive*
 *.pyc
 data/human/electrophysiology/subthreshold/20260807/*
+.vscode
