@@ -1,6 +1,8 @@
 .vscode/
 .codeocean/
 .claude/
+environment/
+metadata/
 temp*
 todo*
 archive*
