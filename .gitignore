@@ -3,6 +3,9 @@
 .claude/
 environment/
 metadata/
+code/preprocessing/
+code/tables/
+.gitattributes
 temp*
 todo*
 archive*
