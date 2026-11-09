@@ -1,5 +1,11 @@
 # Human Neocortical Glutamatergic Neurons Revealed Through Multimodal Profiling
+
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.celrep.2026.118269-blue)](https://doi.org/10.1016/j.celrep.2026.118269)
 
-## Resources 
-- Multichannel Igor Electrophysiology Suite - https://github.com/alleninstitute/mies
+Code and analyses associated with the manuscript ([Dalley et al., 2026](https://doi.org/10.1016/j.celrep.2026.118269)).
+
+The study uses Patch-seq to characterize the transcriptomic, electrophysiological, and morphological properties of human neocortical glutamatergic neurons across cortical layers 2–6.
+
+## Resources
+
+- [Multichannel Igor Electrophysiology Suite (MIES)](https://github.com/AllenInstitute/MIES)
