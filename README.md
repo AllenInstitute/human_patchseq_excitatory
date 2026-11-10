@@ -6,6 +6,10 @@ Code and analyses associated with the manuscript ([Dalley et al., 2026](https://
 
 The study uses Patch-seq to characterize the transcriptomic, electrophysiological, and morphological properties of human neocortical glutamatergic neurons across cortical layers 2–6.
 
+<p align="center">
+  <img src="figures/graphic_abstract.png" width="850" alt="Graphical abstract">
+</p>
+
 ## Resources
 
 - [Multichannel Igor Electrophysiology Suite (MIES)](https://github.com/AllenInstitute/MIES)
